@@ -1,0 +1,46 @@
+
+body {
+  margin: 0;
+  overscroll-behavior-y: none;
+  background-color: white;
+}
+
+body * {
+  scroll-behavior: smooth;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: hsla(0,0%,100%);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsla(200,30%,76%,0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-resizer {
+  background-color:transparent;
+}
+
+
+.hover-item {
+  transition-duration: 300ms;
+}
+.hover-item:hover {
+  background-color: hsla(0, 100%, 100%, 0.9);
+}
+.hover-item:active, .hover-item:hover {
+  background-color: hsla(0, 100%, 100%, 1);
+  box-shadow: 0px 0px 2px hsla(0, 100%, 0%, 0.3);
+}
+
