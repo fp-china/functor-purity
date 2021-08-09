@@ -2606,7 +2606,7 @@
                             :by |rJG4IHzWf
                           |x $ {}
                             :data $ {}
-                              |T $ {} (:type :leaf) (:by |rJG4IHzWf) (:at 1628241608762) (:text |js/window.speechSynthesis.cancel)
+                              |T $ {} (:text |js/window.speechSynthesis.cancel) (:type :leaf) (:at 1628241608762) (:by |rJG4IHzWf)
                             :type :expr
                             :at 1628241608762
                             :by |rJG4IHzWf
@@ -2628,14 +2628,56 @@
               |j $ {} (:text |reading-list) (:type :leaf) (:at 1627829702411) (:by |rJG4IHzWf)
               |r $ {}
                 :data $ {}
+                  |ZT $ {}
+                    :data $ {}
+                      |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                      |j $ {}
+                        :data $ {}
+                          |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/004-web-frontend.cirru") (:type :leaf) (:at 1628436629128) (:by |rJG4IHzWf)
+                        :type :expr
+                        :at 1628242430398
+                        :by |rJG4IHzWf
+                    :type :expr
+                    :at 1628242430398
+                    :by |rJG4IHzWf
                   |T $ {} (:text |[]) (:type :leaf) (:at 1627829829651) (:by |rJG4IHzWf)
                   |Z $ {}
                     :data $ {}
-                      |T $ {} (:type :leaf) (:by |rJG4IHzWf) (:at 1628242430398) (:text |parse-cirru-edn)
-                      |j $ {} (:type :expr) (:by |rJG4IHzWf) (:at 1628242430398)
+                      |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                      |j $ {}
                         :data $ {}
-                          |T $ {} (:type :leaf) (:by |rJG4IHzWf) (:at 1628242430398) (:text |slurp)
-                          |j $ {} (:type :leaf) (:by |rJG4IHzWf) (:at 1628242430398) (:text "|\"data/002-haskell-hiring.cirru")
+                          |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/005-talk-cat.cirru") (:type :leaf) (:at 1628436881239) (:by |rJG4IHzWf)
+                        :type :expr
+                        :at 1628242430398
+                        :by |rJG4IHzWf
+                    :type :expr
+                    :at 1628242430398
+                    :by |rJG4IHzWf
+                  |a $ {}
+                    :data $ {}
+                      |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                      |j $ {}
+                        :data $ {}
+                          |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/003-tutorial-learning.cirru") (:type :leaf) (:at 1628436366971) (:by |rJG4IHzWf)
+                        :type :expr
+                        :at 1628242430398
+                        :by |rJG4IHzWf
+                    :type :expr
+                    :at 1628242430398
+                    :by |rJG4IHzWf
+                  |c $ {}
+                    :data $ {}
+                      |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                      |j $ {}
+                        :data $ {}
+                          |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/002-haskell-hiring.cirru") (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                        :type :expr
+                        :at 1628242430398
+                        :by |rJG4IHzWf
                     :type :expr
                     :at 1628242430398
                     :by |rJG4IHzWf
@@ -3679,7 +3721,7 @@
                         :by |rJG4IHzWf
                       |T $ {}
                         :data $ {}
-                          |D $ {} (:type :leaf) (:by |rJG4IHzWf) (:at 1628241620122) (:text |;)
+                          |D $ {} (:text |;) (:type :leaf) (:at 1628241620122) (:by |rJG4IHzWf)
                           |T $ {} (:text |persist-storage!) (:type :leaf) (:at 1533919515671) (:by |rJG4IHzWf)
                         :type :expr
                         :at 1612344224533
