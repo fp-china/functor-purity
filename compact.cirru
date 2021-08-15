@@ -222,6 +222,7 @@
                 js/window.speechSynthesis.cancel
         |reading-list $ quote
           def reading-list $ []
+            parse-cirru-edn $ slurp "\"data/006-database-perf-usage.cirru"
             parse-cirru-edn $ slurp "\"data/005-talk-cat.cirru"
             parse-cirru-edn $ slurp "\"data/004-web-frontend.cirru"
             parse-cirru-edn $ slurp "\"data/003-tutorial-learning.cirru"
