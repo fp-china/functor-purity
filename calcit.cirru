@@ -2628,6 +2628,19 @@
               |j $ {} (:text |reading-list) (:type :leaf) (:at 1627829702411) (:by |rJG4IHzWf)
               |r $ {}
                 :data $ {}
+                  |ZD $ {}
+                    :data $ {}
+                      |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                      |j $ {}
+                        :data $ {}
+                          |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/005-talk-cat.cirru") (:type :leaf) (:at 1628436881239) (:by |rJG4IHzWf)
+                        :type :expr
+                        :at 1628242430398
+                        :by |rJG4IHzWf
+                    :type :expr
+                    :at 1628242430398
+                    :by |rJG4IHzWf
                   |ZT $ {}
                     :data $ {}
                       |T $ {} (:text |parse-cirru-edn) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
@@ -2648,7 +2661,7 @@
                       |j $ {}
                         :data $ {}
                           |T $ {} (:text |slurp) (:type :leaf) (:at 1628242430398) (:by |rJG4IHzWf)
-                          |j $ {} (:text "|\"data/005-talk-cat.cirru") (:type :leaf) (:at 1628436881239) (:by |rJG4IHzWf)
+                          |j $ {} (:text "|\"data/006-database-perf-usage.cirru") (:type :leaf) (:at 1629048962764) (:by |rJG4IHzWf)
                         :type :expr
                         :at 1628242430398
                         :by |rJG4IHzWf
