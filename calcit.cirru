@@ -186,7 +186,7 @@
                                                   |v $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |94)
                           |r $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                             :data $ {}
-                              |T $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |memof-call)
+                              |T $ %{} :Leaf (:at 1701107797092) (:by |rJG4IHzWf) (:text |memof1-call)
                               |j $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |comp-menu)
                               |r $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                                 :data $ {}
@@ -326,7 +326,7 @@
                                       |r $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |ui/column)
                           |r $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                             :data $ {}
-                              |T $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |memof-call)
+                              |T $ %{} :Leaf (:at 1701107820647) (:by |rJG4IHzWf) (:text |memof1-call)
                               |j $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |comp-header)
                           |v $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                             :data $ {}
@@ -337,7 +337,7 @@
                                   |j $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |store)
                           |x $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                             :data $ {}
-                              |T $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |memof-call)
+                              |T $ %{} :Leaf (:at 1701107821832) (:by |rJG4IHzWf) (:text |memof1-call)
                               |j $ %{} :Leaf (:at 1631459337166) (:by |rJG4IHzWf) (:text |comp-input)
                               |r $ %{} :Expr (:at 1631459337166) (:by |rJG4IHzWf)
                                 :data $ {}
@@ -1527,67 +1527,40 @@
                   |T $ %{} :Leaf (:at 1627829829651) (:by |rJG4IHzWf) (:text |[])
                   |Z $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1669224116560) (:by |rJG4IHzWf) (:text "|\"data/009-ghc-wasm.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1669224116560) (:by |rJG4IHzWf) (:text "|\"data/009-ghc-wasm.cirru")
                   |Z1 $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1631459075303) (:by |rJG4IHzWf) (:text "|\"data/008-haskell-generics.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1631459075303) (:by |rJG4IHzWf) (:text "|\"data/008-haskell-generics.cirru")
                   |Z5 $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1631459046784) (:by |rJG4IHzWf) (:text "|\"data/007-immutable-channel.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1631459046784) (:by |rJG4IHzWf) (:text "|\"data/007-immutable-channel.cirru")
                   |Z9 $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1629048962764) (:by |rJG4IHzWf) (:text "|\"data/006-database-perf-usage.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1629048962764) (:by |rJG4IHzWf) (:text "|\"data/006-database-perf-usage.cirru")
                   |ZD $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1628436881239) (:by |rJG4IHzWf) (:text "|\"data/005-talk-cat.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1628436881239) (:by |rJG4IHzWf) (:text "|\"data/005-talk-cat.cirru")
                   |ZT $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1628436629128) (:by |rJG4IHzWf) (:text "|\"data/004-web-frontend.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1628436629128) (:by |rJG4IHzWf) (:text "|\"data/004-web-frontend.cirru")
                   |a $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1628436366971) (:by |rJG4IHzWf) (:text "|\"data/003-tutorial-learning.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1628436366971) (:by |rJG4IHzWf) (:text "|\"data/003-tutorial-learning.cirru")
                   |c $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628242430398) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text "|\"data/002-haskell-hiring.cirru")
+                      |T $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1628242430398) (:by |rJG4IHzWf) (:text "|\"data/002-haskell-hiring.cirru")
                   |f $ %{} :Expr (:at 1628001103646) (:by |rJG4IHzWf)
                     :data $ {}
-                      |T $ %{} :Leaf (:at 1628001103646) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
-                      |j $ %{} :Expr (:at 1628001103646) (:by |rJG4IHzWf)
-                        :data $ {}
-                          |T $ %{} :Leaf (:at 1628001103646) (:by |rJG4IHzWf) (:text |slurp)
-                          |j $ %{} :Leaf (:at 1628242425199) (:by |rJG4IHzWf) (:text "|\"data/001-haskell-tiobe.cirru")
+                      |T $ %{} :Leaf (:at 1628001103646) (:by |rJG4IHzWf) (:text |slurp-data)
+                      |j $ %{} :Leaf (:at 1628242425199) (:by |rJG4IHzWf) (:text "|\"data/001-haskell-tiobe.cirru")
         |santinize-voice $ %{} :CodeEntry (:doc |)
           :code $ %{} :Expr (:at 1627905614601) (:by |rJG4IHzWf)
             :data $ {}
@@ -1723,24 +1696,30 @@
                                   |T $ %{} :Leaf (:at 1627801007512) (:by |rJG4IHzWf) (:text |js/console.warn)
                                   |j $ %{} :Leaf (:at 1627801007512) (:by |rJG4IHzWf) (:text "|\"no target")
                   |r $ %{} :Leaf (:at 1628161744014) (:by |rJG4IHzWf) (:text |100)
-        |slurp $ %{} :CodeEntry (:doc |)
-          :code $ %{} :Expr (:at 1627814852767) (:by |rJG4IHzWf)
+        |slurp-data $ %{} :CodeEntry (:doc |)
+          :code $ %{} :Expr (:at 1701108101743) (:by |rJG4IHzWf)
             :data $ {}
               |T $ %{} :Leaf (:at 1627814858229) (:by |rJG4IHzWf) (:text |defmacro)
-              |j $ %{} :Leaf (:at 1627814852767) (:by |rJG4IHzWf) (:text |slurp)
-              |r $ %{} :Expr (:at 1627814852767) (:by |rJG4IHzWf)
+              |b $ %{} :Leaf (:at 1701108269818) (:by |rJG4IHzWf) (:text |slurp-data)
+              |h $ %{} :Expr (:at 1627814852767) (:by |rJG4IHzWf)
                 :data $ {}
                   |T $ %{} :Leaf (:at 1627814860021) (:by |rJG4IHzWf) (:text |path)
-              |t $ %{} :Expr (:at 1627815506421) (:by |rJG4IHzWf)
+              |l $ %{} :Expr (:at 1701108104280) (:by |rJG4IHzWf)
                 :data $ {}
-                  |D $ %{} :Leaf (:at 1627829563114) (:by |rJG4IHzWf) (:text |;)
-                  |T $ %{} :Leaf (:at 1627815507425) (:by |rJG4IHzWf) (:text |println)
-                  |j $ %{} :Leaf (:at 1627815509556) (:by |rJG4IHzWf) (:text "|\"reading path")
-                  |r $ %{} :Leaf (:at 1627815510363) (:by |rJG4IHzWf) (:text |path)
-              |v $ %{} :Expr (:at 1627814860597) (:by |rJG4IHzWf)
+                  |T $ %{} :Leaf (:at 1627829563114) (:by |rJG4IHzWf) (:text |;)
+                  |b $ %{} :Leaf (:at 1627815507425) (:by |rJG4IHzWf) (:text |println)
+                  |h $ %{} :Leaf (:at 1627815509556) (:by |rJG4IHzWf) (:text "|\"reading path")
+                  |l $ %{} :Leaf (:at 1627815510363) (:by |rJG4IHzWf) (:text |path)
+              |o $ %{} :Expr (:at 1701108022295) (:by |rJG4IHzWf)
                 :data $ {}
-                  |T $ %{} :Leaf (:at 1627814864155) (:by |rJG4IHzWf) (:text |read-file)
-                  |j $ %{} :Leaf (:at 1627814865941) (:by |rJG4IHzWf) (:text |path)
+                  |D $ %{} :Leaf (:at 1701108026507) (:by |rJG4IHzWf) (:text |&data-to-code)
+                  |T $ %{} :Expr (:at 1701108018474) (:by |rJG4IHzWf)
+                    :data $ {}
+                      |D $ %{} :Leaf (:at 1701108021116) (:by |rJG4IHzWf) (:text |parse-cirru-edn)
+                      |T $ %{} :Expr (:at 1627814860597) (:by |rJG4IHzWf)
+                        :data $ {}
+                          |T $ %{} :Leaf (:at 1627814864155) (:by |rJG4IHzWf) (:text |read-file)
+                          |j $ %{} :Leaf (:at 1627814865941) (:by |rJG4IHzWf) (:text |path)
         |speech! $ %{} :CodeEntry (:doc |)
           :code $ %{} :Expr (:at 1627815242171) (:by |rJG4IHzWf)
             :data $ {}
@@ -2028,11 +2007,11 @@
                         |r $ %{} :Leaf (:at 1628156856448) (:by |rJG4IHzWf) (:text |api-target)
                 |yr $ %{} :Expr (:at 1627801025495) (:by |rJG4IHzWf)
                   :data $ {}
-                    |T $ %{} :Leaf (:at 1627801025495) (:by |rJG4IHzWf) (:text |memof.alias)
+                    |T $ %{} :Leaf (:at 1701107801925) (:by |rJG4IHzWf) (:text |memof.once)
                     |j $ %{} :Leaf (:at 1627801025495) (:by |rJG4IHzWf) (:text |:refer)
                     |r $ %{} :Expr (:at 1627801025495) (:by |rJG4IHzWf)
                       :data $ {}
-                        |T $ %{} :Leaf (:at 1627801025495) (:by |rJG4IHzWf) (:text |memof-call)
+                        |T $ %{} :Leaf (:at 1701107803339) (:by |rJG4IHzWf) (:text |memof1-call)
                 |yv $ %{} :Expr (:at 1627828874067) (:by |rJG4IHzWf)
                   :data $ {}
                     |T $ %{} :Leaf (:at 1627828875883) (:by |rJG4IHzWf) (:text "|\"jdenticon")
@@ -2047,14 +2026,14 @@
                         |T $ %{} :Leaf (:at 1628156851595) (:by |rJG4IHzWf) (:text |speakXunfei)
                 |yxD $ %{} :Expr (:at 1669224583429) (:by |rJG4IHzWf)
                   :data $ {}
-                    |T $ %{} :Leaf (:at 1669224583429) (:by |rJG4IHzWf) (:text "|\"../assets/play-azure")
+                    |T $ %{} :Leaf (:at 1701107919970) (:by |rJG4IHzWf) (:text "|\"../assets/play-azure.mjs")
                     |b $ %{} :Leaf (:at 1669224583429) (:by |rJG4IHzWf) (:text |:refer)
                     |h $ %{} :Expr (:at 1669224583429) (:by |rJG4IHzWf)
                       :data $ {}
                         |T $ %{} :Leaf (:at 1669224583429) (:by |rJG4IHzWf) (:text |synthesizeAzureSpeech)
                 |yxT $ %{} :Expr (:at 1669224588637) (:by |rJG4IHzWf)
                   :data $ {}
-                    |T $ %{} :Leaf (:at 1669224588637) (:by |rJG4IHzWf) (:text "|\"../assets/play-audio")
+                    |T $ %{} :Leaf (:at 1701107922422) (:by |rJG4IHzWf) (:text "|\"../assets/play-audio.mjs")
                     |b $ %{} :Leaf (:at 1669224588637) (:by |rJG4IHzWf) (:text |:refer)
                     |h $ %{} :Expr (:at 1669224588637) (:by |rJG4IHzWf)
                       :data $ {}
