@@ -1,15 +1,15 @@
 {
   "dependencies": {
-    "@calcit/procs": "^0.8.0",
+    "@calcit/procs": "^0.8.12",
     "jdenticon": "^3.2.0",
-    "microsoft-cognitiveservices-speech-sdk": "^1.32.0"
+    "microsoft-cognitiveservices-speech-sdk": "^1.33.1"
   },
   "devDependencies": {
     "bottom-tip": "^0.1.5",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "feather-icons": "^4.29.1",
     "js-base64": "^3.7.5",
-    "vite": "^4.4.9"
+    "vite": "^5.0.2"
   },
   "version": "0.0.1"
 }

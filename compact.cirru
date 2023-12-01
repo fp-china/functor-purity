@@ -33,7 +33,7 @@
                     {} $ :style
                       merge ui/column $ {} (:width "\"28%")
                         :background-color $ hsl 0 0 94
-                    memof-call comp-menu $ :voice? state
+                    memof1-call comp-menu $ :voice? state
                     div
                       {} $ :style
                         merge ui/row-parted $ {} (:padding "\"0 8px") (:user-select :none)
@@ -51,9 +51,9 @@
                           d! cursor $ update state :voice? not
                   div
                     {} $ :style (merge ui/expand ui/column)
-                    memof-call comp-header
+                    memof1-call comp-header
                     comp-messages $ :messages store
-                    memof-call comp-input $ >> states :input
+                    memof1-call comp-input $ >> states :input
                     when dev? $ comp-reel (>> states :reel) reel ({})
         |comp-header $ %{} :CodeEntry (:doc |)
           :code $ quote
@@ -232,16 +232,7 @@
                   scroll-view!
         |reading-list $ %{} :CodeEntry (:doc |)
           :code $ quote
-            def reading-list $ []
-              parse-cirru-edn $ slurp "\"data/009-ghc-wasm.cirru"
-              parse-cirru-edn $ slurp "\"data/008-haskell-generics.cirru"
-              parse-cirru-edn $ slurp "\"data/007-immutable-channel.cirru"
-              parse-cirru-edn $ slurp "\"data/006-database-perf-usage.cirru"
-              parse-cirru-edn $ slurp "\"data/005-talk-cat.cirru"
-              parse-cirru-edn $ slurp "\"data/004-web-frontend.cirru"
-              parse-cirru-edn $ slurp "\"data/003-tutorial-learning.cirru"
-              parse-cirru-edn $ slurp "\"data/002-haskell-hiring.cirru"
-              parse-cirru-edn $ slurp "\"data/001-haskell-tiobe.cirru"
+            def reading-list $ [] (slurp-data "\"data/009-ghc-wasm.cirru") (slurp-data "\"data/008-haskell-generics.cirru") (slurp-data "\"data/007-immutable-channel.cirru") (slurp-data "\"data/006-database-perf-usage.cirru") (slurp-data "\"data/005-talk-cat.cirru") (slurp-data "\"data/004-web-frontend.cirru") (slurp-data "\"data/003-tutorial-learning.cirru") (slurp-data "\"data/002-haskell-hiring.cirru") (slurp-data "\"data/001-haskell-tiobe.cirru")
         |santinize-voice $ %{} :CodeEntry (:doc |)
           :code $ quote
             defn santinize-voice (text)
@@ -267,9 +258,10 @@
                     .!scrollIntoView last-child
                   js/console.warn "\"no target"
               , 100
-        |slurp $ %{} :CodeEntry (:doc |)
+        |slurp-data $ %{} :CodeEntry (:doc |)
           :code $ quote
-            defmacro slurp (path) (; println "\"reading path" path) (read-file path)
+            defmacro slurp-data (path) (; println "\"reading path" path)
+              &data-to-code $ parse-cirru-edn (read-file path)
         |speech! $ %{} :CodeEntry (:doc |)
           :code $ quote
             defn speech! (text cb)
@@ -310,11 +302,11 @@
             reel.comp.reel :refer $ comp-reel
             respo-md.comp.md :refer $ comp-md
             app.config :refer $ dev? api-target
-            memof.alias :refer $ memof-call
+            memof.once :refer $ memof1-call
             "\"jdenticon" :as jdenticon
             "\"../xunfei/sdk" :refer $ speakXunfei
-            "\"../assets/play-azure" :refer $ synthesizeAzureSpeech
-            "\"../assets/play-audio" :refer $ requestAudioSpeech
+            "\"../assets/play-azure.mjs" :refer $ synthesizeAzureSpeech
+            "\"../assets/play-audio.mjs" :refer $ requestAudioSpeech
             feather.core :refer $ comp-icon comp-i
     |app.config $ %{} :FileEntry
       :defs $ {}
