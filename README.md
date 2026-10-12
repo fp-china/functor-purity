@@ -10,7 +10,7 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 从微信扒数据, 然后按照 `data/` 当中的格式保存, 再源码里进行索引.
 
-使用 Calcit 0.29.0、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
+使用 Calcit 0.29.1、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
 `calcit.cirru`、`deps.cirru`，不再使用 `compact.cirru` 或 `package.cirru`。
 
 ```sh
