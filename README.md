@@ -10,8 +10,10 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 从微信扒数据, 然后按照 `data/` 当中的格式保存, 再源码里进行索引.
 
-使用 Calcit 0.29.0、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
+使用 Calcit 0.29.1、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
 `calcit.cirru`、`deps.cirru`，不再使用 `compact.cirru` 或 `package.cirru`。
+依赖使用已发布正式版本：Respo 0.16.116、UI 0.7.35、Reel 0.6.35、
+Markdown 0.4.50、Feather 0.4.25、Memof 0.0.38 和 js-ffi 0.2.1。
 
 ```sh
 corepack enable

@@ -571,23 +571,23 @@
           :code $ quote $ def api-target
             .unwrap-or (get-env |api-target) |
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'String
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
             = |dev $ .unwrap-or (get-env |mode) |
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Bool
         'site $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def site
             {} $ :storage-key |hestory
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Map 'Tag 'String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.config
     'app.main $ %{} 'FileEntry
       :defs $ {}
         '*reel $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defatom *reel
+          :code $ quote $ defref *reel
             assert-type (typed/new-reel schema/store) (:: 'reel.typed/State 'app.schema/Op 'app.schema/Store)
           :examples $ []
           :schema $ :: 'Ref $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
@@ -798,7 +798,7 @@
               :states $ {} $ :cursor ([])
               :messages $ []
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
