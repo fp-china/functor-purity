@@ -10,10 +10,10 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 从微信扒数据, 然后按照 `data/` 当中的格式保存, 再源码里进行索引.
 
-使用 Calcit 0.29.1、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
+使用配对的 Calcit / `@calcit/procs` **0.30.1-alpha.4（预发布）**、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
 `calcit.cirru`、`deps.cirru`，不再使用 `compact.cirru` 或 `package.cirru`。
-依赖使用已发布正式版本：Respo 0.16.116、UI 0.7.35、Reel 0.6.35、
-Markdown 0.4.50、Feather 0.4.25、Memof 0.0.38 和 js-ffi 0.2.1。
+依赖使用已发布正式版本：Respo 0.16.122、UI 0.7.41、Reel 0.6.39、
+Markdown 0.4.56、Feather 0.4.29、Memof 0.0.39 和 js-ffi 0.2.3。
 
 ```sh
 corepack enable
@@ -21,6 +21,7 @@ caps --strict --ci
 yarn install --immutable
 caps verify --toolchain
 calcit --check-only --all-defs
+calcit fix --workflow strict --verify
 calcit test --require-match
 yarn compile
 yarn dev
@@ -28,6 +29,12 @@ yarn dev
 
 开发时另开终端运行 `yarn watch`；生产构建运行 `yarn compile && yarn build`。
 `VITE_BASE_URL` 可指定前端资源的 CDN 地址，默认使用相对路径。
+
+迁移保留真实 `Message` / `Store` / `Op` 和 typed Reel、三处 `memof1-call` 缓存、
+全部九份对话索引及原有两项测试。Map 缺失值显式使用 Option，并保留原来 nil/默认值的处理顺序。
+使用具名构造器；游标、事件值和状态树在真实入口校验，不依赖未证明的断言。
+已审阅的九个本地 JS effect 桥梁确实返回 undefined，合同收紧为 Unit，而不是可空 JsObject。
+仍有 12 处原有 JS 函数边界的显式 unsafe；不宣称零类型债务，不增加基线或放宽依赖隔离期。
 
 ### 语音
 
