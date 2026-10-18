@@ -30,7 +30,7 @@
                 call $ unsafe-coerce raw/cancelSpeech $ :: 'Fn
                   {}
                     :args $ []
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call
             , &unit
           :examples $ []
@@ -43,7 +43,7 @@
                 call $ unsafe-coerce raw/clearAudio $ :: 'Fn
                   {}
                     :args $ []
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call
             , &unit
           :examples $ []
@@ -68,7 +68,7 @@
                 call $ unsafe-coerce raw/initializeSpeech $ :: 'Fn
                   {}
                     :args $ []
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call
             , &unit
           :examples $ []
@@ -91,7 +91,7 @@
                 call $ unsafe-coerce raw/renderIcon $ :: 'Fn
                   {}
                     :args $ [] 'Dynamic 'String
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call element label
             , &unit
           :examples $ []
@@ -116,7 +116,7 @@
                 call $ unsafe-coerce raw/scrollView $ :: 'Fn
                   {}
                     :args $ []
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call
             , &unit
           :examples $ []
@@ -145,7 +145,7 @@
                       {}
                         :args $ []
                         :return 'Unit
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call host text callback
             , &unit
           :examples $ []
@@ -163,7 +163,7 @@
                       {}
                         :args $ []
                         :return 'Unit
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call text key callback
             , &unit
           :examples $ []
@@ -181,7 +181,7 @@
                       {}
                         :args $ []
                         :return 'Unit
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call text callback
             , &unit
           :examples $ []
@@ -199,7 +199,7 @@
                       {}
                         :args $ []
                         :return 'Unit
-                    :return $ :: 'JsNullish 'JsObject
+                    :return 'Unit
               call text callback
             , &unit
           :examples $ []
@@ -304,7 +304,7 @@
                         :args $ [] 'Enum
                         :return 'Unit
                     :return 'Unit
-                  d! $ %:: schema/Op :clear
+                  d! $ schema/Op :clear
                   host/clear-audio!
                   , &unit
           :examples $ []
@@ -332,7 +332,9 @@
                           :return 'Unit
                       :return 'Unit
                     d! $ :: :states cursor $ assoc state :content
-                      decode-map-as (&map:get e :value) 'String
+                      decode-map-as
+                        .unwrap-or (get e :value) nil
+                        , 'String
                     , &unit
                   :autofocus true
                   :on-keydown $ fn (e d!)
@@ -343,14 +345,14 @@
                           :return 'Unit
                       :return 'Unit
                     let
-                        event $ &map:get e :event
+                        event $ .unwrap-or (get e :event) nil
                       when
                         = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
-                        host/prevent-default! $ &map:get e :event
-                        d! $ %:: schema/Op :message $ schema/decode-message
+                        host/prevent-default! $ .unwrap-or (get e :event) nil
+                        d! $ schema/Op :message $ schema/decode-message
                           {} (:author |Me)
                             :text $ .unwrap $ browser/event-target-value
-                              browser/event-host $ &map:get e :event
+                              browser/event-host $ .unwrap-or (get e :event) nil
                         d! $ :: :states cursor $ assoc state :content |
                         scroll-view!
                     , &unit
@@ -469,7 +471,7 @@
             :args $ [] 'Dynamic
         'effect-render-icon $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defeffect effect-render-icon (label) (action el at?)
-            host/render-icon! el $ assert-type label 'String
+            host/render-icon! el $ decode-map-as label 'String
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'respo.schema/Effect)
             :args $ [] 'String
@@ -482,7 +484,7 @@
                   text $ if
                     .unwrap-or (:code? msg) false
                     , |Code $ :text msg
-                d! $ %:: schema/Op :message $ struct-with msg
+                d! $ schema/Op :message $ struct-with msg
                   :floor $ Option :some idx
                 ; println |read text
                 match (dbg api-target)
@@ -545,7 +547,7 @@
                 :args $ []
         'swap-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn swap-messages (messages d!)
-            d! $ %:: schema/Op :swap-messages messages
+            d! $ schema/Op :swap-messages messages
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ [] (:: 'List 'app.schema/Message)
@@ -587,8 +589,7 @@
     'app.main $ %{} 'FileEntry
       :defs $ {}
         '*reel $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defref *reel
-            assert-type (typed/new-reel schema/store) (:: 'reel.typed/State 'app.schema/Op 'app.schema/Store)
+          :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
           :schema $ :: 'Ref $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
         'dispatch! $ %{} 'CodeEntry (:doc |)
@@ -650,7 +651,9 @@
             :args $ []
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render! (mount-target) (comp-container @*reel) dispatch!
+            render! (mount-target) (comp-container @*reel)
+              fn (op)
+                if (enum? op) (dispatch! op) (raise "|render dispatch expected an Enum operation")
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -732,14 +735,14 @@
           :code $ quote $ defn decode-op (op)
             match op
               (:states cursor state)
-                if (list? cursor) (%:: Op :states cursor state) (raise |Invalid-state-cursor)
+                if (list? cursor) (Op :states cursor state) (raise |Invalid-state-cursor)
               (:hydrate-storage data)
-                %:: Op :hydrate-storage $ decode-store data
+                Op :hydrate-storage $ decode-store data
               (:message data)
-                %:: Op :message $ decode-message data
-              (:clear) (%:: Op :clear)
+                Op :message $ decode-message data
+              (:clear) (Op :clear)
               (:swap-messages data)
-                %:: Op :swap-messages $ decode-messages data
+                Op :swap-messages $ decode-messages data
               _ $ raise |Unknown-operation
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'app.schema/Op)
@@ -748,18 +751,19 @@
           :code $ quote $ defn decode-store (raw)
             let
                 fields $ storage-map raw
-              %{} Store
-                :states $ decode-map-as (&map:get fields :states) (:: 'Map 'Tag 'Dynamic)
-                :messages $ decode-messages $ &map:get fields :messages
+              Store :states
+                decode-map-as
+                  .unwrap-or (get fields :states) nil
+                  :: 'Map 'Tag 'Dynamic
+                , :messages $ decode-messages $ .unwrap-or (get fields :messages) nil
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'app.schema/Store)
             :args $ [] 'Dynamic
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
             let
-                raw $ &map:get states :data
-              if (nil? raw)
-                %{} FormState $ :content |
+                raw $ .unwrap-or (get states :data) nil
+              if (nil? raw) (FormState :content |)
                 decode-map-as (storage-map raw) FormState
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'app.schema/FormState)
@@ -767,9 +771,8 @@
         'read-root-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-root-state (states)
             let
-                raw $ &map:get states :data
-              if (nil? raw)
-                %{} RootState (:content |) (:voice? false)
+                raw $ .unwrap-or (get states :data) nil
+              if (nil? raw) (RootState :content | :voice? false)
                 decode-map-as (storage-map raw) RootState
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'app.schema/RootState)
@@ -777,7 +780,7 @@
         'state-cursor $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn state-cursor (states)
             let
-                raw $ &map:get states :cursor
+                raw $ .unwrap-or (get states :cursor) nil
               if (nil? raw) ([])
                 decode-map-as raw $ :: 'List 'Dynamic
           :examples $ []
@@ -794,9 +797,9 @@
             :return $ :: 'Map 'Tag 'Dynamic
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
-            %{} Store
-              :states $ {} $ :cursor ([])
-              :messages $ []
+            Store :states
+              {} $ :cursor $ []
+              , :messages $ []
           :examples $ []
           :schema $ :: 'app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
@@ -807,7 +810,7 @@
           :code $ quote $ defn updater (store op op-id op-time)
             match op
               (:states cursor state)
-                assoc store :states $ assert-type
+                assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
                   :: 'Map 'Tag 'Dynamic
               (:hydrate-storage data) data
@@ -822,11 +825,11 @@
           :tests $ [] $ %{} 'TestEntry (:name |preserves-message-operations)
             :code $ quote $ let
                 message $ schema/decode-message $ {} (:author |Me) (:text |Hello)
-                added $ updater schema/store (%:: schema/Op :message message) |id 0
+                added $ updater schema/store (schema/Op :message message) |id 0
                 swapped $ updater schema/store
-                  %:: schema/Op :swap-messages $ [] message
+                  schema/Op :swap-messages $ [] message
                   , |id 0
-                cleared $ updater added (%:: schema/Op :clear) |id 0
+                cleared $ updater added (schema/Op :clear) |id 0
                 hydrated $ updater schema/store
                   schema/decode-op $ :: :hydrate-storage $ &struct:to-map added
                   , |id 0
