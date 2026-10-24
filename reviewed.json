@@ -1,0 +1,5774 @@
+{
+  "defs": [
+    {
+      "code": [
+        "def",
+        "calcit-dirname",
+        "|"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.$meta/calcit-dirname",
+      "js_ffi": null,
+      "schema": null,
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "calcit-filename",
+        "|calcit.cirru"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.$meta/calcit-filename",
+      "js_ffi": null,
+      "schema": null,
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "build-error",
+        [],
+        [
+          "if",
+          [
+            "js-nullish?",
+            "build-errors"
+          ],
+          [
+            "Option",
+            ":none"
+          ],
+          [
+            "let",
+            [
+              [
+                "convert",
+                [
+                  "unsafe-coerce",
+                  "raw/buildErrorText",
+                  [
+                    "::",
+                    "'Fn",
+                    [
+                      "{}",
+                      [
+                        ":args",
+                        [
+                          "[]",
+                          [
+                            "::",
+                            "'JsNullish",
+                            "'JsObject"
+                          ]
+                        ]
+                      ],
+                      [
+                        ":return",
+                        "'String"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "Option",
+              ":some",
+              [
+                "convert",
+                "build-errors"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/build-error",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ],
+        [
+          ":return",
+          [
+            "::",
+            "'Option",
+            "'String"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "cancel-speech!",
+        [],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/cancelSpeech",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/cancel-speech!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "clear-audio!",
+        [],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/clearAudio",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/clear-audio!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "formatter!",
+        [],
+        [
+          "load-console-formatter!"
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/formatter!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "fullscreen!",
+        [],
+        [
+          "browser/element-request-fullscreen!",
+          [
+            ".unwrap",
+            [
+              "browser/document-body"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/fullscreen!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "initialize-speech!",
+        [],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/initializeSpeech",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/initialize-speech!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "prevent-default!",
+        [
+          "raw"
+        ],
+        [
+          "let",
+          [
+            [
+              "event",
+              [
+                "browser/event-host",
+                "raw"
+              ]
+            ]
+          ],
+          [
+            ".prevent-default!",
+            "event"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/prevent-default!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "render-icon!",
+        [
+          "element",
+          "label"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/renderIcon",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'Dynamic",
+                        "'String"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "element",
+            "label"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/render-icon!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic",
+            "'String"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "sanitize-voice",
+        [
+          "text"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/sanitizeVoice",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'String"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "text"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/sanitize-voice",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'String"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "scroll-view!",
+        [],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/scrollView",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/scroll-view!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "show-hud!",
+        [
+          "kind",
+          "text"
+        ],
+        [
+          "let",
+          [
+            [
+              "show",
+              [
+                "unsafe-coerce",
+                "hud!",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String",
+                        "'String"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      [
+                        "::",
+                        "'JsNullish",
+                        "'JsObject"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "show",
+            "kind",
+            "text"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/show-hud!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            "'String"
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "speak-audio!",
+        [
+          "host",
+          "text",
+          "callback"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/speakAudio",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String",
+                        "'String",
+                        [
+                          "::",
+                          "'Fn",
+                          [
+                            "{}",
+                            [
+                              ":args",
+                              [
+                                "[]"
+                              ]
+                            ],
+                            [
+                              ":return",
+                              "'Unit"
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "host",
+            "text",
+            "callback"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/speak-audio!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            "'String",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "speak-azure!",
+        [
+          "text",
+          "key",
+          "callback"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/speakAzure",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String",
+                        "'String",
+                        [
+                          "::",
+                          "'Fn",
+                          [
+                            "{}",
+                            [
+                              ":args",
+                              [
+                                "[]"
+                              ]
+                            ],
+                            [
+                              ":return",
+                              "'Unit"
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "text",
+            "key",
+            "callback"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/speak-azure!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            "'String",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "speak-xunfei!",
+        [
+          "text",
+          "callback"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/speakXunfei",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String",
+                        [
+                          "::",
+                          "'Fn",
+                          [
+                            "{}",
+                            [
+                              ":args",
+                              [
+                                "[]"
+                              ]
+                            ],
+                            [
+                              ":return",
+                              "'Unit"
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "text",
+            "callback"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/speak-xunfei!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "speech!",
+        [
+          "text",
+          "callback"
+        ],
+        [
+          "let",
+          [
+            [
+              "call",
+              [
+                "unsafe-coerce",
+                "raw/speech",
+                [
+                  "::",
+                  "'Fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'String",
+                        [
+                          "::",
+                          "'Fn",
+                          [
+                            "{}",
+                            [
+                              ":args",
+                              [
+                                "[]"
+                              ]
+                            ],
+                            [
+                              ":return",
+                              "'Unit"
+                            ]
+                          ]
+                        ]
+                      ]
+                    ],
+                    [
+                      ":return",
+                      "'Unit"
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "call",
+            "text",
+            "callback"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.browser/speech!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        [
+          ":features",
+          [
+            "#{}",
+            ":js-ffi"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-avatar",
+        [
+          "label"
+        ],
+        [
+          "[]",
+          [
+            "effect-render-icon",
+            "label"
+          ],
+          [
+            "div",
+            [
+              "{}",
+              [
+                ":style",
+                [
+                  "{}",
+                  [
+                    ":width",
+                    "40"
+                  ],
+                  [
+                    ":height",
+                    "40"
+                  ],
+                  [
+                    ":border",
+                    [
+                      "str",
+                      "|1px solid ",
+                      [
+                        "hsl",
+                        "0",
+                        "0",
+                        "90"
+                      ]
+                    ]
+                  ],
+                  [
+                    ":border-radius",
+                    "|2px"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-avatar",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-container",
+        [
+          "reel"
+        ],
+        [
+          "let",
+          [
+            [
+              "store",
+              [
+                ":store",
+                "reel"
+              ]
+            ],
+            [
+              "states",
+              [
+                ":states",
+                "store"
+              ]
+            ],
+            [
+              "cursor",
+              [
+                "schema/state-cursor",
+                "states"
+              ]
+            ],
+            [
+              "state",
+              [
+                "schema/read-root-state",
+                "states"
+              ]
+            ]
+          ],
+          [
+            "div",
+            [
+              "{}",
+              [
+                ":style",
+                [
+                  "merge",
+                  "ui/global",
+                  "ui/fullscreen",
+                  "ui/row",
+                  [
+                    "{}",
+                    [
+                      ":background-color",
+                      ":white"
+                    ],
+                    [
+                      ":font-size",
+                      "16"
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "merge",
+                    "ui/column",
+                    [
+                      "{}",
+                      [
+                        ":width",
+                        "|28%"
+                      ],
+                      [
+                        ":background-color",
+                        [
+                          "hsl",
+                          "0",
+                          "0",
+                          "94"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "memof1-call",
+                "comp-menu",
+                [
+                  ":voice?",
+                  "state"
+                ]
+              ],
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":style",
+                    [
+                      "merge",
+                      "ui/row-parted",
+                      [
+                        "{}",
+                        [
+                          ":padding",
+                          "|0 8px"
+                        ],
+                        [
+                          ":user-select",
+                          ":none"
+                        ]
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "a",
+                  [
+                    "{}",
+                    [
+                      ":style",
+                      [
+                        "{}",
+                        [
+                          ":font-size",
+                          "14"
+                        ]
+                      ]
+                    ],
+                    [
+                      ":href",
+                      "|https://github.com/fp-china/functor-purity"
+                    ],
+                    [
+                      ":target",
+                      "|_blank"
+                    ],
+                    [
+                      ":inner-text",
+                      "|源码查看 GitHub."
+                    ]
+                  ]
+                ],
+                [
+                  "span",
+                  [
+                    "{}",
+                    [
+                      ":inner-text",
+                      "|Voice"
+                    ],
+                    [
+                      ":style",
+                      [
+                        "{}",
+                        [
+                          ":color",
+                          [
+                            "if",
+                            [
+                              ":voice?",
+                              "state"
+                            ],
+                            [
+                              "hsl",
+                              "240",
+                              "60",
+                              "60"
+                            ],
+                            [
+                              "hsl",
+                              "0",
+                              "0",
+                              "80"
+                            ]
+                          ]
+                        ],
+                        [
+                          ":cursor",
+                          ":pointer"
+                        ],
+                        [
+                          ":font-family",
+                          "ui/font-fancy"
+                        ]
+                      ]
+                    ],
+                    [
+                      ":on-click",
+                      [
+                        "fn",
+                        [
+                          "e",
+                          "d!"
+                        ],
+                        [
+                          "hint-fn",
+                          [
+                            "{}",
+                            [
+                              ":args",
+                              [
+                                "[]",
+                                [
+                                  "::",
+                                  "'Map",
+                                  "'Tag",
+                                  "'Dynamic"
+                                ],
+                                [
+                                  "::",
+                                  "'Fn",
+                                  [
+                                    "{}",
+                                    [
+                                      ":args",
+                                      [
+                                        "[]",
+                                        "'Enum"
+                                      ]
+                                    ],
+                                    [
+                                      ":return",
+                                      "'Unit"
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ],
+                            [
+                              ":return",
+                              "'Unit"
+                            ]
+                          ]
+                        ],
+                        [
+                          "d!",
+                          [
+                            "::",
+                            ":states",
+                            "cursor",
+                            [
+                              "assoc",
+                              "state",
+                              ":voice?",
+                              [
+                                "not",
+                                [
+                                  ":voice?",
+                                  "state"
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        "&unit"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "merge",
+                    "ui/expand",
+                    "ui/column"
+                  ]
+                ]
+              ],
+              [
+                "memof1-call",
+                "comp-header"
+              ],
+              [
+                "comp-messages",
+                [
+                  ":messages",
+                  "store"
+                ]
+              ],
+              [
+                "memof1-call",
+                "comp-input",
+                [
+                  ">>",
+                  "states",
+                  ":input"
+                ]
+              ],
+              [
+                "when",
+                "dev?",
+                [
+                  "comp-typed-reel",
+                  [
+                    "decode-map-as",
+                    [
+                      ">>",
+                      "states",
+                      ":reel"
+                    ],
+                    [
+                      "::",
+                      "'Map",
+                      "'Dynamic",
+                      "'Dynamic"
+                    ]
+                  ],
+                  "reel",
+                  [
+                    "{}"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-container",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'reel.typed/State",
+              "'app.schema/Op",
+              "'app.schema/Store"
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-header",
+        [],
+        [
+          "div",
+          [
+            "{}",
+            [
+              ":style",
+              [
+                "merge",
+                "ui/row-parted",
+                [
+                  "{}",
+                  [
+                    ":padding",
+                    "|4px 6px"
+                  ],
+                  [
+                    ":font-weight",
+                    "300"
+                  ],
+                  [
+                    ":font-size",
+                    "16"
+                  ],
+                  [
+                    ":background-color",
+                    [
+                      "hsl",
+                      "0",
+                      "0",
+                      "97"
+                    ]
+                  ],
+                  [
+                    ":border-bottom",
+                    [
+                      "str",
+                      "|1px solid ",
+                      [
+                        "hsl",
+                        "0",
+                        "0",
+                        "90"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "span",
+            "nil"
+          ],
+          [
+            "span",
+            [
+              "{}",
+              [
+                ":on-click",
+                [
+                  "fn",
+                  [
+                    "e",
+                    "d!"
+                  ],
+                  [
+                    "hint-fn",
+                    [
+                      "{}",
+                      [
+                        ":args",
+                        [
+                          "[]",
+                          [
+                            "::",
+                            "'Map",
+                            "'Tag",
+                            "'Dynamic"
+                          ],
+                          [
+                            "::",
+                            "'Fn",
+                            [
+                              "{}",
+                              [
+                                ":args",
+                                [
+                                  "[]",
+                                  "'Enum"
+                                ]
+                              ],
+                              [
+                                ":return",
+                                "'Unit"
+                              ]
+                            ]
+                          ]
+                        ]
+                      ],
+                      [
+                        ":return",
+                        "'Unit"
+                      ]
+                    ]
+                  ],
+                  [
+                    "host/fullscreen!"
+                  ],
+                  "&unit"
+                ]
+              ]
+            ],
+            [
+              "<>",
+              "|Functor&Purity",
+              [
+                "{}",
+                [
+                  ":font-family",
+                  "ui/font-fancy"
+                ]
+              ]
+            ]
+          ],
+          [
+            "comp-icon",
+            ":trash",
+            [
+              "{}",
+              [
+                ":font-size",
+                "20"
+              ],
+              [
+                ":color",
+                [
+                  "hsl",
+                  "320",
+                  "80",
+                  "70"
+                ]
+              ],
+              [
+                ":line-height",
+                "|20px"
+              ],
+              [
+                ":vertical-align",
+                ":middle"
+              ],
+              [
+                ":cursor",
+                ":pointer"
+              ]
+            ],
+            [
+              "fn",
+              [
+                "e",
+                "d!"
+              ],
+              [
+                "hint-fn",
+                [
+                  "{}",
+                  [
+                    ":args",
+                    [
+                      "[]",
+                      [
+                        "::",
+                        "'Map",
+                        "'Tag",
+                        "'Dynamic"
+                      ],
+                      [
+                        "::",
+                        "'Fn",
+                        [
+                          "{}",
+                          [
+                            ":args",
+                            [
+                              "[]",
+                              "'Enum"
+                            ]
+                          ],
+                          [
+                            ":return",
+                            "'Unit"
+                          ]
+                        ]
+                      ]
+                    ]
+                  ],
+                  [
+                    ":return",
+                    "'Unit"
+                  ]
+                ]
+              ],
+              [
+                "d!",
+                [
+                  "schema/Op",
+                  ":clear"
+                ]
+              ],
+              [
+                "host/clear-audio!"
+              ],
+              "&unit"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-header",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-input",
+        [
+          "states"
+        ],
+        [
+          "let",
+          [
+            [
+              "cursor",
+              [
+                "schema/state-cursor",
+                "states"
+              ]
+            ],
+            [
+              "state",
+              [
+                "schema/read-form-state",
+                "states"
+              ]
+            ]
+          ],
+          [
+            "div",
+            [
+              "{}",
+              [
+                ":style",
+                [
+                  "merge",
+                  "ui/row-middle",
+                  [
+                    "{}",
+                    [
+                      ":padding",
+                      "|6px 10px"
+                    ],
+                    [
+                      ":background-color",
+                      [
+                        "hsl",
+                        "0",
+                        "0",
+                        "97"
+                      ]
+                    ],
+                    [
+                      ":border-top",
+                      [
+                        "str",
+                        "|1px solid ",
+                        [
+                          "hsl",
+                          "0",
+                          "0",
+                          "90"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "textarea",
+              [
+                "{}",
+                [
+                  ":value",
+                  [
+                    ":content",
+                    "state"
+                  ]
+                ],
+                [
+                  ":placeholder",
+                  "|Reply..."
+                ],
+                [
+                  ":style",
+                  [
+                    "merge",
+                    "ui/textarea",
+                    "ui/expand",
+                    [
+                      "{}",
+                      [
+                        ":height",
+                        "40"
+                      ],
+                      [
+                        ":line-height",
+                        "|24px"
+                      ],
+                      [
+                        ":border",
+                        ":none"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  ":on-input",
+                  [
+                    "fn",
+                    [
+                      "e",
+                      "d!"
+                    ],
+                    [
+                      "hint-fn",
+                      [
+                        "{}",
+                        [
+                          ":args",
+                          [
+                            "[]",
+                            [
+                              "::",
+                              "'Map",
+                              "'Tag",
+                              "'Dynamic"
+                            ],
+                            [
+                              "::",
+                              "'Fn",
+                              [
+                                "{}",
+                                [
+                                  ":args",
+                                  [
+                                    "[]",
+                                    "'Enum"
+                                  ]
+                                ],
+                                [
+                                  ":return",
+                                  "'Unit"
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          ":return",
+                          "'Unit"
+                        ]
+                      ]
+                    ],
+                    [
+                      "d!",
+                      [
+                        "::",
+                        ":states",
+                        "cursor",
+                        [
+                          "assoc",
+                          "state",
+                          ":content",
+                          [
+                            "decode-map-as",
+                            [
+                              ".unwrap-or",
+                              [
+                                "get",
+                                "e",
+                                ":value"
+                              ],
+                              "nil"
+                            ],
+                            "'String"
+                          ]
+                        ]
+                      ]
+                    ],
+                    "&unit"
+                  ]
+                ],
+                [
+                  ":autofocus",
+                  "true"
+                ],
+                [
+                  ":on-keydown",
+                  [
+                    "fn",
+                    [
+                      "e",
+                      "d!"
+                    ],
+                    [
+                      "hint-fn",
+                      [
+                        "{}",
+                        [
+                          ":args",
+                          [
+                            "[]",
+                            [
+                              "::",
+                              "'Map",
+                              "'Tag",
+                              "'Dynamic"
+                            ],
+                            [
+                              "::",
+                              "'Fn",
+                              [
+                                "{}",
+                                [
+                                  ":args",
+                                  [
+                                    "[]",
+                                    "'Enum"
+                                  ]
+                                ],
+                                [
+                                  ":return",
+                                  "'Unit"
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          ":return",
+                          "'Unit"
+                        ]
+                      ]
+                    ],
+                    [
+                      "let",
+                      [
+                        [
+                          "event",
+                          [
+                            ".unwrap-or",
+                            [
+                              "get",
+                              "e",
+                              ":event"
+                            ],
+                            "nil"
+                          ]
+                        ]
+                      ],
+                      [
+                        "when",
+                        [
+                          "=",
+                          "|Enter",
+                          [
+                            "browser/keyboard-event-key",
+                            [
+                              "browser/keyboard-event-host",
+                              "event"
+                            ]
+                          ]
+                        ],
+                        [
+                          "host/prevent-default!",
+                          [
+                            ".unwrap-or",
+                            [
+                              "get",
+                              "e",
+                              ":event"
+                            ],
+                            "nil"
+                          ]
+                        ],
+                        [
+                          "d!",
+                          [
+                            "schema/Op",
+                            ":message",
+                            [
+                              "schema/decode-message",
+                              [
+                                "{}",
+                                [
+                                  ":author",
+                                  "|Me"
+                                ],
+                                [
+                                  ":text",
+                                  [
+                                    ".unwrap",
+                                    [
+                                      "browser/event-target-value",
+                                      [
+                                        "browser/event-host",
+                                        [
+                                          ".unwrap-or",
+                                          [
+                                            "get",
+                                            "e",
+                                            ":event"
+                                          ],
+                                          "nil"
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ]
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          "d!",
+                          [
+                            "::",
+                            ":states",
+                            "cursor",
+                            [
+                              "assoc",
+                              "state",
+                              ":content",
+                              "|"
+                            ]
+                          ]
+                        ],
+                        [
+                          "scroll-view!"
+                        ]
+                      ]
+                    ],
+                    "&unit"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-input",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'Map",
+              "'Dynamic",
+              "'Dynamic"
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-menu",
+        [
+          "voice?"
+        ],
+        [
+          "div",
+          [
+            "{}",
+            [
+              ":style",
+              [
+                "merge",
+                "ui/expand",
+                [
+                  "{}",
+                  [
+                    ":padding",
+                    "|16px 0"
+                  ],
+                  [
+                    ":line-height",
+                    "|36px"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "list->",
+            [
+              "{}"
+            ],
+            [
+              "->",
+              "reading-list",
+              [
+                "map",
+                [
+                  "fn",
+                  [
+                    "info"
+                  ],
+                  [
+                    "[]",
+                    [
+                      ":idx",
+                      "info"
+                    ],
+                    [
+                      "div",
+                      [
+                        "{}",
+                        [
+                          ":class-name",
+                          "|hover-item"
+                        ],
+                        [
+                          ":style",
+                          [
+                            "merge",
+                            "ui/row-middle",
+                            [
+                              "{}",
+                              [
+                                ":cursor",
+                                ":pointer"
+                              ],
+                              [
+                                ":padding",
+                                "|0 8px"
+                              ]
+                            ]
+                          ]
+                        ],
+                        [
+                          ":on-click",
+                          [
+                            "fn",
+                            [
+                              "e",
+                              "d!"
+                            ],
+                            [
+                              "hint-fn",
+                              [
+                                "{}",
+                                [
+                                  ":args",
+                                  [
+                                    "[]",
+                                    [
+                                      "::",
+                                      "'Map",
+                                      "'Tag",
+                                      "'Dynamic"
+                                    ],
+                                    [
+                                      "::",
+                                      "'Fn",
+                                      [
+                                        "{}",
+                                        [
+                                          ":args",
+                                          [
+                                            "[]",
+                                            "'Enum"
+                                          ]
+                                        ],
+                                        [
+                                          ":return",
+                                          "'Unit"
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  ":return",
+                                  "'Unit"
+                                ]
+                              ]
+                            ],
+                            [
+                              "host/cancel-speech!"
+                            ],
+                            [
+                              "if",
+                              "voice?",
+                              [
+                                "read-content",
+                                [
+                                  ":messages",
+                                  "info"
+                                ],
+                                "0",
+                                "d!"
+                              ],
+                              [
+                                "swap-messages",
+                                [
+                                  ":messages",
+                                  "info"
+                                ],
+                                "d!"
+                              ]
+                            ],
+                            "&unit"
+                          ]
+                        ]
+                      ],
+                      [
+                        "comp-icon",
+                        ":link",
+                        [
+                          "{}",
+                          [
+                            ":font-size",
+                            "14"
+                          ],
+                          [
+                            ":color",
+                            [
+                              "hsl",
+                              "230",
+                              "70",
+                              "70"
+                            ]
+                          ],
+                          [
+                            ":line-height",
+                            "|14px"
+                          ]
+                        ],
+                        "nil"
+                      ],
+                      [
+                        "=<",
+                        "2",
+                        "nil"
+                      ],
+                      [
+                        "<>",
+                        [
+                          ":idx",
+                          "info"
+                        ],
+                        [
+                          "{}",
+                          [
+                            ":color",
+                            [
+                              "hsl",
+                              "0",
+                              "0",
+                              "70"
+                            ]
+                          ],
+                          [
+                            ":font-size",
+                            "12"
+                          ],
+                          [
+                            ":font-family",
+                            "ui/font-code"
+                          ]
+                        ]
+                      ],
+                      [
+                        "=<",
+                        "8",
+                        "nil"
+                      ],
+                      [
+                        "<>",
+                        [
+                          ":title",
+                          "info"
+                        ]
+                      ],
+                      [
+                        "=<",
+                        "8",
+                        "nil"
+                      ],
+                      [
+                        "<>",
+                        [
+                          "str",
+                          [
+                            "count",
+                            [
+                              ":messages",
+                              "info"
+                            ]
+                          ]
+                        ],
+                        [
+                          "{}",
+                          [
+                            ":font-size",
+                            "12"
+                          ],
+                          [
+                            ":background-color",
+                            [
+                              "hsl",
+                              "200",
+                              "60",
+                              "85"
+                            ]
+                          ],
+                          [
+                            ":color",
+                            ":white"
+                          ],
+                          [
+                            ":padding",
+                            "|0px 5px"
+                          ],
+                          [
+                            ":border-radius",
+                            "|8px"
+                          ],
+                          [
+                            ":line-height",
+                            "|16px"
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "=<",
+            "nil",
+            "80"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-menu",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Bool"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-message",
+        [
+          "content"
+        ],
+        [
+          "div",
+          [
+            "{}",
+            [
+              ":style",
+              [
+                "merge",
+                "ui/row",
+                [
+                  "{}",
+                  [
+                    ":width",
+                    "|98%"
+                  ],
+                  [
+                    ":padding",
+                    "|4px 10px"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "comp-avatar",
+            [
+              ":author",
+              "content"
+            ]
+          ],
+          [
+            "=<",
+            "8",
+            "nil"
+          ],
+          [
+            "div",
+            [
+              "{}",
+              [
+                ":style",
+                "ui/flex"
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "{}",
+                    [
+                      ":color",
+                      [
+                        "hsl",
+                        "0",
+                        "0",
+                        "70"
+                      ]
+                    ],
+                    [
+                      ":font-size",
+                      "12"
+                    ],
+                    [
+                      ":line-height",
+                      "|18px"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":style",
+                    "ui/row-parted"
+                  ]
+                ],
+                [
+                  "<>",
+                  [
+                    ":author",
+                    "content"
+                  ]
+                ],
+                [
+                  "<>",
+                  [
+                    "str",
+                    "|#",
+                    [
+                      "match",
+                      [
+                        ":floor",
+                        "content"
+                      ],
+                      [
+                        [
+                          ":some",
+                          "floor-number"
+                        ],
+                        [
+                          "str",
+                          "floor-number"
+                        ]
+                      ],
+                      [
+                        [
+                          ":none"
+                        ],
+                        "|_"
+                      ]
+                    ]
+                  ],
+                  [
+                    "{}",
+                    [
+                      ":font-size",
+                      "10"
+                    ],
+                    [
+                      ":color",
+                      [
+                        "hsl",
+                        "0",
+                        "0",
+                        "80"
+                      ]
+                    ],
+                    [
+                      ":font-family",
+                      "ui/font-code"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":style",
+                    [
+                      "{}",
+                      [
+                        ":color",
+                        [
+                          "hsl",
+                          "0",
+                          "0",
+                          "40"
+                        ]
+                      ],
+                      [
+                        ":font-size",
+                        "16"
+                      ],
+                      [
+                        ":line-height",
+                        "|24px"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "comp-md",
+                  [
+                    ":text",
+                    "content"
+                  ],
+                  [
+                    "{}"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-message",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'app.schema/Message"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defcomp",
+        "comp-messages",
+        [
+          "ms"
+        ],
+        [
+          "div",
+          [
+            "{}",
+            [
+              ":style",
+              "ui/expand"
+            ]
+          ],
+          [
+            "=<",
+            "nil",
+            "8"
+          ],
+          [
+            "list->",
+            [
+              "{}",
+              [
+                ":id",
+                "|message-area"
+              ]
+            ],
+            [
+              "map-indexed",
+              "ms",
+              [
+                "fn",
+                [
+                  "idx",
+                  "message"
+                ],
+                [
+                  "hint-fn",
+                  [
+                    "{}",
+                    [
+                      ":args",
+                      [
+                        "[]",
+                        "'Number",
+                        "'app.schema/Message"
+                      ]
+                    ],
+                    [
+                      ":return",
+                      [
+                        "::",
+                        "'List",
+                        "'Dynamic"
+                      ]
+                    ]
+                  ]
+                ],
+                [
+                  "[]",
+                  "idx",
+                  [
+                    "comp-message",
+                    "message"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "if",
+            [
+              "empty?",
+              "ms"
+            ],
+            [
+              "div",
+              [
+                "{}",
+                [
+                  ":style",
+                  [
+                    "merge",
+                    "ui/center",
+                    [
+                      "{}",
+                      [
+                        ":padding",
+                        "|40px"
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "<>",
+                "|Cleared.",
+                [
+                  "{}",
+                  [
+                    ":font-family",
+                    "ui/font-fancy"
+                  ],
+                  [
+                    ":font-weight",
+                    "500"
+                  ],
+                  [
+                    ":color",
+                    [
+                      "hsl",
+                      "0",
+                      "0",
+                      "70"
+                    ]
+                  ],
+                  [
+                    ":font-style",
+                    ":italic"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          [
+            "=<",
+            "nil",
+            "80"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/comp-messages",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Component"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'List",
+              "'app.schema/Message"
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "decode-archive",
+        [
+          "data"
+        ],
+        [
+          "decode-map-as",
+          "data",
+          "schema/Archive"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/decode-archive",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/Archive"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defeffect",
+        "effect-render-icon",
+        [
+          "label"
+        ],
+        [
+          "action",
+          "el",
+          "at?"
+        ],
+        [
+          "host/render-icon!",
+          "el",
+          [
+            "decode-map-as",
+            "label",
+            "'String"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/effect-render-icon",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.schema/Effect"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "read-content",
+        [
+          "messages",
+          "idx",
+          "d!"
+        ],
+        [
+          "when",
+          [
+            "not",
+            [
+              "empty?",
+              "messages"
+            ]
+          ],
+          [
+            "let",
+            [
+              [
+                "msg",
+                [
+                  ".unwrap",
+                  [
+                    "first",
+                    "messages"
+                  ]
+                ]
+              ],
+              [
+                "text",
+                [
+                  "if",
+                  [
+                    ".unwrap-or",
+                    [
+                      ":code?",
+                      "msg"
+                    ],
+                    "false"
+                  ],
+                  "|Code",
+                  [
+                    ":text",
+                    "msg"
+                  ]
+                ]
+              ]
+            ],
+            [
+              "d!",
+              [
+                "schema/Op",
+                ":message",
+                [
+                  "struct-with",
+                  "msg",
+                  [
+                    ":floor",
+                    [
+                      "Option",
+                      ":some",
+                      "idx"
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              ";",
+              "println",
+              "|read",
+              "text"
+            ],
+            [
+              "match",
+              [
+                "dbg",
+                "api-target"
+              ],
+              [
+                "|xunfei",
+                [
+                  "host/speak-xunfei!",
+                  [
+                    "santinize-voice",
+                    "text"
+                  ],
+                  [
+                    "fn",
+                    [],
+                    [
+                      "read-content",
+                      [
+                        "rest",
+                        "messages"
+                      ],
+                      [
+                        "inc",
+                        "idx"
+                      ],
+                      "d!"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "|azure",
+                [
+                  "host/speak-azure!",
+                  [
+                    "santinize-voice",
+                    "text"
+                  ],
+                  [
+                    ".unwrap-or",
+                    [
+                      "get-env",
+                      "|azure-key"
+                    ],
+                    "|"
+                  ],
+                  [
+                    "fn",
+                    [],
+                    [
+                      "read-content",
+                      [
+                        "rest",
+                        "messages"
+                      ],
+                      [
+                        "inc",
+                        "idx"
+                      ],
+                      "d!"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "|audio",
+                [
+                  "host/speak-audio!",
+                  [
+                    ".unwrap-or",
+                    [
+                      "get-env",
+                      "|audio-host"
+                    ],
+                    "|"
+                  ],
+                  [
+                    "santinize-voice",
+                    "text"
+                  ],
+                  [
+                    "fn",
+                    [],
+                    [
+                      "read-content",
+                      [
+                        "rest",
+                        "messages"
+                      ],
+                      [
+                        "inc",
+                        "idx"
+                      ],
+                      "d!"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "_",
+                [
+                  "speech!",
+                  [
+                    "santinize-voice",
+                    "text"
+                  ],
+                  [
+                    "fn",
+                    [],
+                    [
+                      "read-content",
+                      [
+                        "rest",
+                        "messages"
+                      ],
+                      [
+                        "inc",
+                        "idx"
+                      ],
+                      "d!"
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "scroll-view!"
+            ]
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/read-content",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'List",
+              "'app.schema/Message"
+            ],
+            "'Number",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]",
+                    "'Enum"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "reading-list",
+        [
+          "map",
+          [
+            "[]",
+            [
+              "slurp-data",
+              "|data/009-ghc-wasm.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/008-haskell-generics.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/007-immutable-channel.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/006-database-perf-usage.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/005-talk-cat.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/004-web-frontend.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/003-tutorial-learning.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/002-haskell-hiring.cirru"
+            ],
+            [
+              "slurp-data",
+              "|data/001-haskell-tiobe.cirru"
+            ]
+          ],
+          "decode-archive"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/reading-list",
+      "js_ffi": null,
+      "schema": [
+        "::",
+        "'List",
+        "'app.schema/Archive"
+      ],
+      "tags": [],
+      "tests": [
+        {
+          "code": [
+            "do",
+            [
+              "assert=",
+              "9",
+              [
+                "count",
+                "reading-list"
+              ]
+            ],
+            [
+              "assert=",
+              "1410",
+              [
+                "foldl",
+                "reading-list",
+                "0",
+                [
+                  "fn",
+                  [
+                    "n",
+                    "archive"
+                  ],
+                  [
+                    "+",
+                    "n",
+                    [
+                      "count",
+                      [
+                        ":messages",
+                        "archive"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "assert=",
+              "|009",
+              [
+                ":idx",
+                [
+                  ".unwrap",
+                  [
+                    "first",
+                    "reading-list"
+                  ]
+                ]
+              ]
+            ]
+          ],
+          "name": "preserves-archived-conversations",
+          "tags": [
+            "archive"
+          ]
+        }
+      ]
+    },
+    {
+      "code": [
+        "defn",
+        "santinize-voice",
+        [
+          "text"
+        ],
+        [
+          "host/sanitize-voice",
+          "text"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/santinize-voice",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'String"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "scroll-view!",
+        [],
+        [
+          "host/scroll-view!"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/scroll-view!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defmacro",
+        "slurp-data",
+        [
+          "path"
+        ],
+        [
+          ";",
+          "println",
+          "|reading path",
+          "path"
+        ],
+        [
+          "&data-to-code",
+          [
+            "parse-cirru-edn",
+            [
+              "read-file",
+              "path"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/slurp-data",
+      "js_ffi": null,
+      "schema": [
+        "::",
+        "'Macro",
+        [
+          "{}",
+          [
+            ":capabilities",
+            [
+              "#{}",
+              ":fs-read"
+            ]
+          ],
+          [
+            ":expansion",
+            [
+              "::",
+              "'Expr",
+              "'Dynamic"
+            ]
+          ],
+          [
+            ":required",
+            [
+              "[]",
+              [
+                "::",
+                "'Expr",
+                "'String"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "speech!",
+        [
+          "text",
+          "cb"
+        ],
+        [
+          "host/speech!",
+          "text",
+          "cb"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/speech!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'String",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "swap-messages",
+        [
+          "messages",
+          "d!"
+        ],
+        [
+          "d!",
+          [
+            "schema/Op",
+            ":swap-messages",
+            "messages"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.comp.container/swap-messages",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'List",
+              "'app.schema/Message"
+            ],
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]",
+                    "'Enum"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "api-target",
+        [
+          ".unwrap-or",
+          [
+            "get-env",
+            "|api-target"
+          ],
+          "|"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.config/api-target",
+      "js_ffi": null,
+      "schema": "'String",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "dev?",
+        [
+          "=",
+          "|dev",
+          [
+            ".unwrap-or",
+            [
+              "get-env",
+              "|mode"
+            ],
+            "|"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.config/dev?",
+      "js_ffi": null,
+      "schema": "'Bool",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "site",
+        [
+          "{}",
+          [
+            ":storage-key",
+            "|hestory"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.config/site",
+      "js_ffi": null,
+      "schema": [
+        "::",
+        "'Map",
+        "'Tag",
+        "'String"
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defref",
+        "*reel",
+        [
+          "typed/new-reel",
+          "schema/store"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/*reel",
+      "js_ffi": null,
+      "schema": [
+        "::",
+        "'Ref",
+        [
+          "::",
+          "'reel.typed/State",
+          "'app.schema/Op",
+          "'app.schema/Store"
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "dispatch!",
+        [
+          "op"
+        ],
+        [
+          "when",
+          "config/dev?",
+          [
+            "match",
+            "op",
+            [
+              [
+                ":states",
+                "cursor",
+                "state"
+              ],
+              "nil"
+            ],
+            [
+              "_",
+              [
+                "println",
+                "|Dispatch:",
+                "op"
+              ]
+            ]
+          ]
+        ],
+        [
+          "reset!",
+          "*reel",
+          [
+            "next-reel",
+            "op"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/dispatch!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Enum"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "main!",
+        [],
+        [
+          "when",
+          "config/dev?",
+          [
+            "host/formatter!"
+          ]
+        ],
+        [
+          "println",
+          "|Running mode:",
+          [
+            "if",
+            "config/dev?",
+            "|dev",
+            "|release"
+          ]
+        ],
+        [
+          "host/initialize-speech!"
+        ],
+        [
+          "render-app!"
+        ],
+        [
+          "add-watch!",
+          "*reel",
+          ":changes",
+          [
+            "fn",
+            [
+              "reel",
+              "prev"
+            ],
+            [
+              "render-app!"
+            ]
+          ]
+        ],
+        [
+          "listen-devtools!",
+          "|k",
+          "dispatch!"
+        ],
+        [
+          "println",
+          "|App started."
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/main!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "mount-target",
+        [],
+        [
+          "narrow-element",
+          [
+            ".unwrap",
+            [
+              "browser/query-selector",
+              "|.app"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/mount-target",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'respo.dom/DomElement"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "next-reel",
+        [
+          "op"
+        ],
+        [
+          "match",
+          [
+            "typed/decode-control",
+            "op"
+          ],
+          [
+            [
+              ":some",
+              "control"
+            ],
+            [
+              "typed/apply-control",
+              "updater",
+              "@*reel",
+              "control"
+            ]
+          ],
+          [
+            [
+              ":none"
+            ],
+            [
+              "typed/record-op",
+              "updater",
+              "@*reel",
+              [
+                "schema/decode-op",
+                "op"
+              ],
+              [
+                "generate-id!"
+              ],
+              [
+                "shared/now-ms"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/next-reel",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Enum"
+          ]
+        ],
+        [
+          ":return",
+          [
+            "::",
+            "'reel.typed/State",
+            "'app.schema/Op",
+            "'app.schema/Store"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "persist-storage!",
+        [],
+        [
+          "browser/storage-set!",
+          "|hestory",
+          [
+            "format-cirru-edn",
+            [
+              ":store",
+              "@*reel"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/persist-storage!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "reload!",
+        [],
+        [
+          "match",
+          [
+            "host/build-error"
+          ],
+          [
+            [
+              ":none"
+            ],
+            [
+              "do",
+              [
+                "remove-watch!",
+                "*reel",
+                ":changes"
+              ],
+              [
+                "clear-cache!"
+              ],
+              [
+                "add-watch!",
+                "*reel",
+                ":changes",
+                [
+                  "fn",
+                  [
+                    "reel",
+                    "prev"
+                  ],
+                  [
+                    "render-app!"
+                  ]
+                ]
+              ],
+              [
+                "reset!",
+                "*reel",
+                [
+                  "typed/refresh",
+                  "updater",
+                  "@*reel",
+                  "schema/store"
+                ]
+              ],
+              [
+                "host/show-hud!",
+                "|ok~",
+                "|Ok"
+              ]
+            ]
+          ],
+          [
+            [
+              ":some",
+              "error-text"
+            ],
+            [
+              "host/show-hud!",
+              "|error",
+              "error-text"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/reload!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "render-app!",
+        [],
+        [
+          "render!",
+          [
+            "mount-target"
+          ],
+          [
+            "comp-container",
+            "@*reel"
+          ],
+          [
+            "fn",
+            [
+              "op"
+            ],
+            [
+              "if",
+              [
+                "enum?",
+                "op"
+              ],
+              [
+                "dispatch!",
+                "op"
+              ],
+              [
+                "raise",
+                "|render dispatch expected an Enum operation"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/render-app!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "repeat!",
+        [
+          "duration",
+          "cb"
+        ],
+        [
+          "browser/set-timeout!",
+          [
+            "fn",
+            [],
+            [
+              "cb"
+            ],
+            [
+              "repeat!",
+              "duration",
+              "cb"
+            ],
+            "&unit"
+          ],
+          [
+            "*",
+            "1000",
+            "duration"
+          ]
+        ],
+        "&unit"
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.main/repeat!",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'Unit"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Number",
+            [
+              "::",
+              "'Fn",
+              [
+                "{}",
+                [
+                  ":return",
+                  "'Unit"
+                ],
+                [
+                  ":args",
+                  [
+                    "[]"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defstruct",
+        "Archive",
+        [
+          ":idx",
+          "'String"
+        ],
+        [
+          ":title",
+          "'String"
+        ],
+        [
+          ":messages",
+          [
+            "::",
+            "'List",
+            "'app.schema/Message"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/Archive",
+      "js_ffi": null,
+      "schema": "'StructDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defstruct",
+        "FormState",
+        [
+          ":content",
+          "'String"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/FormState",
+      "js_ffi": null,
+      "schema": "'StructDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defstruct",
+        "Message",
+        [
+          ":author",
+          "'String"
+        ],
+        [
+          ":text",
+          "'String"
+        ],
+        [
+          ":floor",
+          [
+            "::",
+            "'Option",
+            "'Number"
+          ]
+        ],
+        [
+          ":code?",
+          [
+            "::",
+            "'Option",
+            "'Bool"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/Message",
+      "js_ffi": null,
+      "schema": "'StructDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defenum",
+        "Op",
+        [
+          ":states",
+          [
+            "::",
+            "'List",
+            "'Dynamic"
+          ],
+          "'Dynamic"
+        ],
+        [
+          ":hydrate-storage",
+          "'app.schema/Store"
+        ],
+        [
+          ":message",
+          "'app.schema/Message"
+        ],
+        [
+          ":clear"
+        ],
+        [
+          ":swap-messages",
+          [
+            "::",
+            "'List",
+            "'app.schema/Message"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/Op",
+      "js_ffi": null,
+      "schema": "'EnumDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defstruct",
+        "RootState",
+        [
+          ":content",
+          "'String"
+        ],
+        [
+          ":voice?",
+          "'Bool"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/RootState",
+      "js_ffi": null,
+      "schema": "'StructDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defstruct",
+        "Store",
+        [
+          ":states",
+          [
+            "::",
+            "'Map",
+            "'Tag",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":messages",
+          [
+            "::",
+            "'List",
+            "'app.schema/Message"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/Store",
+      "js_ffi": null,
+      "schema": "'StructDef",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "decode-message",
+        [
+          "raw"
+        ],
+        [
+          "decode-map-as",
+          [
+            "storage-map",
+            "raw"
+          ],
+          "Message"
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/decode-message",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/Message"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "decode-messages",
+        [
+          "raw"
+        ],
+        [
+          "if",
+          [
+            "list?",
+            "raw"
+          ],
+          [
+            "map",
+            "raw",
+            "decode-message"
+          ],
+          [
+            "raise",
+            "|Invalid-message-list"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/decode-messages",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":return",
+          [
+            "::",
+            "'List",
+            "'app.schema/Message"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "decode-op",
+        [
+          "op"
+        ],
+        [
+          "match",
+          "op",
+          [
+            [
+              ":states",
+              "cursor",
+              "state"
+            ],
+            [
+              "if",
+              [
+                "list?",
+                "cursor"
+              ],
+              [
+                "Op",
+                ":states",
+                "cursor",
+                "state"
+              ],
+              [
+                "raise",
+                "|Invalid-state-cursor"
+              ]
+            ]
+          ],
+          [
+            [
+              ":hydrate-storage",
+              "data"
+            ],
+            [
+              "Op",
+              ":hydrate-storage",
+              [
+                "decode-store",
+                "data"
+              ]
+            ]
+          ],
+          [
+            [
+              ":message",
+              "data"
+            ],
+            [
+              "Op",
+              ":message",
+              [
+                "decode-message",
+                "data"
+              ]
+            ]
+          ],
+          [
+            [
+              ":clear"
+            ],
+            [
+              "Op",
+              ":clear"
+            ]
+          ],
+          [
+            [
+              ":swap-messages",
+              "data"
+            ],
+            [
+              "Op",
+              ":swap-messages",
+              [
+                "decode-messages",
+                "data"
+              ]
+            ]
+          ],
+          [
+            "_",
+            [
+              "raise",
+              "|Unknown-operation"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/decode-op",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/Op"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Enum"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "decode-store",
+        [
+          "raw"
+        ],
+        [
+          "let",
+          [
+            [
+              "fields",
+              [
+                "storage-map",
+                "raw"
+              ]
+            ]
+          ],
+          [
+            "Store",
+            ":states",
+            [
+              "decode-map-as",
+              [
+                ".unwrap-or",
+                [
+                  "get",
+                  "fields",
+                  ":states"
+                ],
+                "nil"
+              ],
+              [
+                "::",
+                "'Map",
+                "'Tag",
+                "'Dynamic"
+              ]
+            ],
+            ":messages",
+            [
+              "decode-messages",
+              [
+                ".unwrap-or",
+                [
+                  "get",
+                  "fields",
+                  ":messages"
+                ],
+                "nil"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/decode-store",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/Store"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "read-form-state",
+        [
+          "states"
+        ],
+        [
+          "let",
+          [
+            [
+              "raw",
+              [
+                ".unwrap-or",
+                [
+                  "get",
+                  "states",
+                  ":data"
+                ],
+                "nil"
+              ]
+            ]
+          ],
+          [
+            "if",
+            [
+              "nil?",
+              "raw"
+            ],
+            [
+              "FormState",
+              ":content",
+              "|"
+            ],
+            [
+              "decode-map-as",
+              [
+                "storage-map",
+                "raw"
+              ],
+              "FormState"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/read-form-state",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/FormState"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'Map",
+              "'Dynamic",
+              "'Dynamic"
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "read-root-state",
+        [
+          "states"
+        ],
+        [
+          "let",
+          [
+            [
+              "raw",
+              [
+                ".unwrap-or",
+                [
+                  "get",
+                  "states",
+                  ":data"
+                ],
+                "nil"
+              ]
+            ]
+          ],
+          [
+            "if",
+            [
+              "nil?",
+              "raw"
+            ],
+            [
+              "RootState",
+              ":content",
+              "|",
+              ":voice?",
+              "false"
+            ],
+            [
+              "decode-map-as",
+              [
+                "storage-map",
+                "raw"
+              ],
+              "RootState"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/read-root-state",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/RootState"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'Map",
+              "'Dynamic",
+              "'Dynamic"
+            ]
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "state-cursor",
+        [
+          "states"
+        ],
+        [
+          "let",
+          [
+            [
+              "raw",
+              [
+                ".unwrap-or",
+                [
+                  "get",
+                  "states",
+                  ":cursor"
+                ],
+                "nil"
+              ]
+            ]
+          ],
+          [
+            "if",
+            [
+              "nil?",
+              "raw"
+            ],
+            [
+              "[]"
+            ],
+            [
+              "decode-map-as",
+              "raw",
+              [
+                "::",
+                "'List",
+                "'Dynamic"
+              ]
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/state-cursor",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            [
+              "::",
+              "'Map",
+              "'Dynamic",
+              "'Dynamic"
+            ]
+          ]
+        ],
+        [
+          ":return",
+          [
+            "::",
+            "'List",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "storage-map",
+        [
+          "raw"
+        ],
+        [
+          "if",
+          [
+            "struct?",
+            "raw"
+          ],
+          [
+            "&struct:to-map",
+            "raw"
+          ],
+          [
+            "decode-map-as",
+            "raw",
+            [
+              "::",
+              "'Map",
+              "'Tag",
+              "'Dynamic"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/storage-map",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":return",
+          [
+            "::",
+            "'Map",
+            "'Tag",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "def",
+        "store",
+        [
+          "Store",
+          ":states",
+          [
+            "{}",
+            [
+              ":cursor",
+              [
+                "[]"
+              ]
+            ]
+          ],
+          ":messages",
+          [
+            "[]"
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.schema/store",
+      "js_ffi": null,
+      "schema": "'app.schema/Store",
+      "tags": [],
+      "tests": []
+    },
+    {
+      "code": [
+        "defn",
+        "updater",
+        [
+          "store",
+          "op",
+          "op-id",
+          "op-time"
+        ],
+        [
+          "match",
+          "op",
+          [
+            [
+              ":states",
+              "cursor",
+              "state"
+            ],
+            [
+              "assoc",
+              "store",
+              ":states",
+              [
+                "decode-map-as",
+                [
+                  "update-state-tree",
+                  [
+                    ":states",
+                    "store"
+                  ],
+                  "cursor",
+                  "state"
+                ],
+                [
+                  "::",
+                  "'Map",
+                  "'Tag",
+                  "'Dynamic"
+                ]
+              ]
+            ]
+          ],
+          [
+            [
+              ":hydrate-storage",
+              "data"
+            ],
+            "data"
+          ],
+          [
+            [
+              ":message",
+              "data"
+            ],
+            [
+              "assoc",
+              "store",
+              ":messages",
+              [
+                "conj",
+                [
+                  ":messages",
+                  "store"
+                ],
+                "data"
+              ]
+            ]
+          ],
+          [
+            [
+              ":clear"
+            ],
+            [
+              "assoc",
+              "store",
+              ":messages",
+              [
+                "[]"
+              ]
+            ]
+          ],
+          [
+            [
+              ":swap-messages",
+              "data"
+            ],
+            [
+              "assoc",
+              "store",
+              ":messages",
+              "data"
+            ]
+          ]
+        ]
+      ],
+      "doc": "",
+      "examples": [],
+      "ffi": null,
+      "ffi_edn": null,
+      "id": "app.updater/updater",
+      "js_ffi": null,
+      "schema": [
+        "{}",
+        [
+          ":kind",
+          ":fn"
+        ],
+        [
+          ":return",
+          "'app.schema/Store"
+        ],
+        [
+          ":args",
+          [
+            "[]",
+            "'app.schema/Store",
+            "'app.schema/Op",
+            "'String",
+            "'Number"
+          ]
+        ]
+      ],
+      "tags": [],
+      "tests": [
+        {
+          "code": [
+            "let",
+            [
+              [
+                "message",
+                [
+                  "schema/decode-message",
+                  [
+                    "{}",
+                    [
+                      ":author",
+                      "|Me"
+                    ],
+                    [
+                      ":text",
+                      "|Hello"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "added",
+                [
+                  "updater",
+                  "schema/store",
+                  [
+                    "schema/Op",
+                    ":message",
+                    "message"
+                  ],
+                  "|id",
+                  "0"
+                ]
+              ],
+              [
+                "swapped",
+                [
+                  "updater",
+                  "schema/store",
+                  [
+                    "schema/Op",
+                    ":swap-messages",
+                    [
+                      "[]",
+                      "message"
+                    ]
+                  ],
+                  "|id",
+                  "0"
+                ]
+              ],
+              [
+                "cleared",
+                [
+                  "updater",
+                  "added",
+                  [
+                    "schema/Op",
+                    ":clear"
+                  ],
+                  "|id",
+                  "0"
+                ]
+              ],
+              [
+                "hydrated",
+                [
+                  "updater",
+                  "schema/store",
+                  [
+                    "schema/decode-op",
+                    [
+                      "::",
+                      ":hydrate-storage",
+                      [
+                        "&struct:to-map",
+                        "added"
+                      ]
+                    ]
+                  ],
+                  "|id",
+                  "0"
+                ]
+              ]
+            ],
+            [
+              "assert=",
+              [
+                "[]",
+                "message"
+              ],
+              [
+                ":messages",
+                "added"
+              ]
+            ],
+            [
+              "assert=",
+              [
+                ":messages",
+                "added"
+              ],
+              [
+                ":messages",
+                "swapped"
+              ]
+            ],
+            [
+              "assert=",
+              [
+                "[]"
+              ],
+              [
+                ":messages",
+                "cleared"
+              ]
+            ],
+            [
+              "assert=",
+              [
+                ":messages",
+                "added"
+              ],
+              [
+                ":messages",
+                "hydrated"
+              ]
+            ]
+          ],
+          "name": "preserves-message-operations",
+          "tags": [
+            "business"
+          ]
+        }
+      ]
+    }
+  ],
+  "namespaces": [
+    {
+      "definition_count": 2,
+      "doc": "",
+      "namespace": "app.$meta",
+      "ns_code": [
+        "ns",
+        "app.$meta"
+      ]
+    },
+    {
+      "definition_count": 15,
+      "doc": "",
+      "namespace": "app.browser",
+      "ns_code": [
+        "ns",
+        "app.browser",
+        [
+          ":require",
+          [
+            "|../assets/browser.mjs",
+            ":as",
+            "raw"
+          ],
+          [
+            "js-ffi.browser",
+            ":as",
+            "browser"
+          ],
+          [
+            "|./calcit.build-errors",
+            ":default",
+            "build-errors"
+          ],
+          [
+            "|bottom-tip",
+            ":default",
+            "hud!"
+          ]
+        ]
+      ]
+    },
+    {
+      "definition_count": 16,
+      "doc": "",
+      "namespace": "app.comp.container",
+      "ns_code": [
+        "ns",
+        "app.comp.container",
+        [
+          ":require",
+          [
+            "respo-ui.core",
+            ":as",
+            "ui"
+          ],
+          [
+            "respo-ui.core",
+            ":refer",
+            [
+              "hsl"
+            ]
+          ],
+          [
+            "respo.core",
+            ":refer",
+            [
+              "defcomp",
+              "defeffect",
+              "<>",
+              ">>",
+              "a",
+              "div",
+              "button",
+              "textarea",
+              "span",
+              "input",
+              "list->",
+              "create-element"
+            ]
+          ],
+          [
+            "respo.comp.space",
+            ":refer",
+            [
+              "=<"
+            ]
+          ],
+          [
+            "reel.comp.reel",
+            ":refer",
+            [
+              "comp-typed-reel"
+            ]
+          ],
+          [
+            "respo-md.comp.md",
+            ":refer",
+            [
+              "comp-md"
+            ]
+          ],
+          [
+            "app.config",
+            ":refer",
+            [
+              "dev?",
+              "api-target"
+            ]
+          ],
+          [
+            "memof.once",
+            ":refer",
+            [
+              "memof1-call"
+            ]
+          ],
+          [
+            "feather.core",
+            ":refer",
+            [
+              "comp-icon",
+              "comp-i"
+            ]
+          ],
+          [
+            "app.schema",
+            ":as",
+            "schema"
+          ],
+          [
+            "js-ffi.browser",
+            ":as",
+            "browser"
+          ],
+          [
+            "app.browser",
+            ":as",
+            "host"
+          ]
+        ]
+      ]
+    },
+    {
+      "definition_count": 3,
+      "doc": "",
+      "namespace": "app.config",
+      "ns_code": [
+        "ns",
+        "app.config"
+      ]
+    },
+    {
+      "definition_count": 9,
+      "doc": "",
+      "namespace": "app.main",
+      "ns_code": [
+        "ns",
+        "app.main",
+        [
+          ":require",
+          [
+            "respo.core",
+            ":refer",
+            [
+              "render!",
+              "clear-cache!"
+            ]
+          ],
+          [
+            "app.comp.container",
+            ":refer",
+            [
+              "comp-container"
+            ]
+          ],
+          [
+            "app.updater",
+            ":refer",
+            [
+              "updater"
+            ]
+          ],
+          [
+            "app.schema",
+            ":as",
+            "schema"
+          ],
+          [
+            "reel.util",
+            ":refer",
+            [
+              "listen-devtools!"
+            ]
+          ],
+          [
+            "app.config",
+            ":as",
+            "config"
+          ],
+          [
+            "reel.typed",
+            ":as",
+            "typed"
+          ],
+          [
+            "js-ffi.shared",
+            ":as",
+            "shared"
+          ],
+          [
+            "js-ffi.browser",
+            ":as",
+            "browser"
+          ],
+          [
+            "app.browser",
+            ":as",
+            "host"
+          ],
+          [
+            "respo.ffi.browser",
+            ":refer",
+            [
+              "narrow-element"
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "definition_count": 15,
+      "doc": "",
+      "namespace": "app.schema",
+      "ns_code": [
+        "ns",
+        "app.schema"
+      ]
+    },
+    {
+      "definition_count": 1,
+      "doc": "",
+      "namespace": "app.updater",
+      "ns_code": [
+        "ns",
+        "app.updater",
+        [
+          ":require",
+          [
+            "respo.cursor",
+            ":refer",
+            [
+              "update-state-tree"
+            ]
+          ],
+          [
+            "app.schema",
+            ":as",
+            "schema"
+          ]
+        ]
+      ]
+    }
+  ],
+  "config": {
+    "package": "app",
+    "version": "0.0.1",
+    "selected_entry": null,
+    "entries": [
+      {
+        "name": "default",
+        "mode": "js",
+        "target": "browser",
+        "init_fn": "app.main/main!",
+        "reload_fn": "app.main/reload!",
+        "description": "",
+        "modules": [
+          "respo-feather.calcit/",
+          "respo.calcit/",
+          "memof/",
+          "respo-ui.calcit/",
+          "respo-markdown.calcit/",
+          "reel.calcit/",
+          "js-ffi/"
+        ],
+        "type_slots": {},
+        "feature_policy": {}
+      }
+    ],
+    "verification_schema_version": 1,
+    "verification_profiles": []
+  }
+}
