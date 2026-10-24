@@ -231,15 +231,15 @@
                 cursor $ schema/state-cursor states
                 state $ schema/read-root-state states
               div
-                {} $ :style $ merge ui/global ui/fullscreen ui/row
+                {} $ :style $ .merge ui/global ui/fullscreen ui/row
                   {} (:background-color :white) (:font-size 16)
                 div
-                  {} $ :style $ merge ui/column
+                  {} $ :style $ .merge ui/column
                     {} (:width |28%)
                       :background-color $ hsl 0 0 94
                   memof1-call comp-menu $ :voice? state
                   div
-                    {} $ :style $ merge ui/row-parted
+                    {} $ :style $ .merge ui/row-parted
                       {} (:padding "|0 8px") (:user-select :none)
                     a $ {}
                       :style $ {} $ :font-size 14
@@ -262,7 +262,7 @@
                           not $ :voice? state
                         , &unit
                 div
-                  {} $ :style $ merge ui/expand ui/column
+                  {} $ :style $ .merge ui/expand ui/column
                   memof1-call comp-header
                   comp-messages $ :messages store
                   memof1-call comp-input $ >> states :input
@@ -275,7 +275,7 @@
         'comp-header $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-header ()
             div
-              {} $ :style $ merge ui/row-parted
+              {} $ :style $ .merge ui/row-parted
                 {} (:padding "|4px 6px") (:font-weight 300) (:font-size 16)
                   :background-color $ hsl 0 0 97
                   :border-bottom $ str "|1px solid " $ hsl 0 0 90
@@ -316,14 +316,14 @@
                 cursor $ schema/state-cursor states
                 state $ schema/read-form-state states
               div
-                {} $ :style $ merge ui/row-middle
+                {} $ :style $ .merge ui/row-middle
                   {} (:padding "|6px 10px")
                     :background-color $ hsl 0 0 97
                     :border-top $ str "|1px solid " $ hsl 0 0 90
                 textarea $ {}
                   :value $ :content state
                   :placeholder |Reply...
-                  :style $ merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
+                  :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
                     hint-fn $ {}
                       :args $ [] (:: 'Map 'Tag 'Dynamic)
@@ -362,14 +362,14 @@
         'comp-menu $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-menu (voice?)
             div
-              {} $ :style $ merge ui/expand
+              {} $ :style $ .merge ui/expand
                 {} (:padding "|16px 0") (:line-height |36px)
               list-> ({})
                 -> reading-list $ map $ fn (info)
                   [] (:idx info)
                     div
                       {} (:class-name |hover-item)
-                        :style $ merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
+                        :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
                           hint-fn $ {}
                             :args $ [] (:: 'Map 'Tag 'Dynamic)
@@ -411,7 +411,7 @@
         'comp-message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-message (content)
             div
-              {} $ :style $ merge ui/row
+              {} $ :style $ .merge ui/row
                 {} (:width |98%) (:padding "|4px 10px")
               comp-avatar $ :author content
               =< 8 nil
@@ -455,7 +455,7 @@
                   [] idx $ comp-message message
               if (empty? ms)
                 div
-                  {} $ :style $ merge ui/center
+                  {} $ :style $ .merge ui/center
                     {} $ :padding |40px
                   <> |Cleared. $ {} (:font-family ui/font-fancy) (:font-weight 500)
                     :color $ hsl 0 0 70
@@ -516,7 +516,7 @@
           :tests $ [] $ %{} 'TestEntry (:name |preserves-archived-conversations)
             :code $ quote $ do
               assert= 9 $ count reading-list
-              assert= 1410 $ foldl reading-list 0 $ fn (n archive)
+              assert= 1410 $ .fold reading-list 0 $ fn (n archive)
                 + n $ count $ :messages archive
               assert= |009 $ :idx $ .unwrap (first reading-list)
             :tags $ #{} :archive
