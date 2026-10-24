@@ -41,10 +41,13 @@ jobs:
 
       - name: Check types and business tests
         run: |
+          set -euo pipefail
           test ! -e compact.cirru
           test ! -e package.cirru
+          calcit calcit.cirru edit format
+          git diff --quiet -- calcit.cirru
           calcit --check-only --all-defs
-          calcit fix --workflow strict --verify
+          calcit fix --workflow strict --verify --format json | jq -e '.data.workflow.status == "passed" and .diagnostics == []'
           calcit test --require-match
           calcit analyze weak-types --only dynamic-method --summary-only --format json | jq -e '.data.summary.findings == 0'
           calcit analyze weak-types --only deprecated-call --summary-only --format json | jq -e '.data.summary.calls == 0'
@@ -69,6 +72,7 @@ jobs:
 
       - name: Upload frontend to COS and verify public files
         if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+        timeout-minutes: 10
         uses: worktools/cos-upload-action@v1.2.0
         with:
           source-dir: dist
