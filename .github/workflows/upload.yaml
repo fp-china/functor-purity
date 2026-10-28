@@ -71,7 +71,7 @@ jobs:
           yarn build
 
       - name: Upload frontend to COS and verify public files
-        if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' && github.actor != 'dependabot[bot]')
         timeout-minutes: 10
         uses: worktools/cos-upload-action@v1.2.0
         with:

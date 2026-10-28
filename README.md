@@ -6,7 +6,7 @@ Functor & Purity
 
 Demo https://r.fp-china.org/functor-purity/ .
 
-本轮升级对用户的影响：维护工具链改为正式 **Calcit 0.30.1**，对话索引、
+本轮升级对用户的影响：维护工具链改为正式 **Calcit 0.31.0**，对话索引、
 消息操作、缓存、语音入口和页面错误提示保持原行为。只更新前端依赖和写法，
 不改存档内容、COS 前缀或服务器部署目录；迁移 PR 不自动部署生产。
 
@@ -14,11 +14,13 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 从微信扒数据, 然后按照 `data/` 当中的格式保存, 再源码里进行索引.
 
-使用配对的正式 Calcit / `@calcit/procs` **0.30.1**、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
+使用配对的正式 Calcit / `@calcit/procs` **0.31.0**、caps 0.1.1 和 Node.js 24。源码与依赖分别保存在
 `calcit.cirru`、`deps.cirru`，不再使用 `compact.cirru` 或 `package.cirru`。
-依赖使用已发布正式版本：Respo 0.16.124、UI 0.8.0、Reel 0.6.41、
-Markdown 0.4.59、Feather 0.4.30、Memof 0.0.40 和 js-ffi 0.2.5。
-这是一套与 Feather 正式版本精确 pin 一致的图，不混用要求另一套依赖的更新模块或 alpha/main/hash。
+依赖固定到已发布的 Respo 0.17.0-alpha.4、UI 0.9.0-alpha.4、Reel 0.7.0-alpha.4、
+Markdown 0.5.0-alpha.4、Feather 0.5.0-alpha.5、Memof 0.0.41 和 js-ffi 0.2.7，
+传递 Router 0.9.0-alpha.3。CLI/procs 为正式版本，UI 图仍包含 alpha；
+请重新安装完整图，不混装旧缓存，升级后完整刷新。此次仅补齐 Respo 入口的 Enum 类型绑定，
+原业务 Op、对话数据、缓存和 JS 语音/剪贴板实现保持。
 
 ```sh
 corepack enable
@@ -41,7 +43,7 @@ yarn dev
 已审阅的九个本地 JS effect 桥梁确实返回 undefined，合同收紧为 Unit，而不是可空 JsObject。
 仍有 12 处原有 JS 函数边界的显式 unsafe；不宣称零类型债务，不增加基线或放宽依赖隔离期。
 
-本轮把 11 处已知样式 Map 合并迁为 `.merge`，原对话计数测试中的 `foldl`
+此前把 11 处已知样式 Map 合并迁为 `.merge`，原对话计数测试中的 `foldl`
 改为同合同 `.fold`。两项原测试的名字、tags、输入和断言保持不变，包括九份
 对话及 1410 条消息的保留检查。三处 `memof1-call` 仍在；不新增迁移脚本或测试框架。
 `app.browser/show-hud!` 及热更新成功/失败的真实 `bottom-tip` 调用完整保留，不替换为 `raise`。
