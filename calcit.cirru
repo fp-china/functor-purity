@@ -6,7 +6,7 @@
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
       :modules $ [] |respo-feather.calcit/ |respo.calcit/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
-      :type-slots $ {}
+      :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
   :files $ {}
     'app.browser $ %{} 'FileEntry
       :defs $ {}
@@ -689,6 +689,10 @@
             :messages $ :: 'List 'app.schema/Message
           :examples $ []
           :schema $ :: 'StructDef
+        'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
+          :code $ quote $ def DispatchOp (:: :unhandled)
+          :examples $ []
+          :schema $ :: 'Enum
         'FormState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct FormState (:content 'String)
           :examples $ []
