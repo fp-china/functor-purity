@@ -35,6 +35,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          set -euo pipefail
           caps --strict --ci
           yarn install --immutable
           caps verify --toolchain
@@ -58,6 +59,7 @@ jobs:
           CDN_ORIGIN: https://cos-sh.tiye.me
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
+          set -euo pipefail
           if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
             prefix="${GITHUB_REPOSITORY}/pr/${PR_NUMBER}/${GITHUB_RUN_ID}/${GITHUB_RUN_ATTEMPT}/"
           else
