@@ -14,67 +14,49 @@
           :code $ quote $ defn build-error ()
             if (js-nullish? build-errors) (Option :none)
               let
-                  convert $ unsafe-coerce raw/buildErrorText $ :: 'Fn
-                    {}
-                      :args $ [] $ :: 'JsNullish 'JsObject
-                      :return 'String
+                  convert $ unsafe-coerce raw/buildErrorText $ quote
+                    Fn (JsNullish JsObject) (-> String)
                 Option :some $ convert build-errors
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ []
-            :features $ #{} :js-ffi
-            :return $ :: 'Option 'String
+          :schema $ quote $ Fn
+            -> $ Option String
+            :features :js-ffi
         'cancel-speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn cancel-speech! ()
             let
-                call $ unsafe-coerce raw/cancelSpeech $ :: 'Fn
-                  {}
-                    :args $ []
-                    :return 'Unit
+                call $ unsafe-coerce raw/cancelSpeech $ quote
+                  Fn $ -> Unit
               call
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'clear-audio! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn clear-audio! ()
             let
-                call $ unsafe-coerce raw/clearAudio $ :: 'Fn
-                  {}
-                    :args $ []
-                    :return 'Unit
+                call $ unsafe-coerce raw/clearAudio $ quote
+                  Fn $ -> Unit
               call
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'formatter! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn formatter! () (load-console-formatter!) &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'fullscreen! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn fullscreen! ()
             browser/element-request-fullscreen! $ .unwrap $ browser/document-body
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'initialize-speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn initialize-speech! ()
             let
-                call $ unsafe-coerce raw/initializeSpeech $ :: 'Fn
-                  {}
-                    :args $ []
-                    :return 'Unit
+                call $ unsafe-coerce raw/initializeSpeech $ quote
+                  Fn $ -> Unit
               call
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'prevent-default! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn prevent-default! (raw)
             let
@@ -82,132 +64,98 @@
               .prevent-default! event
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Dynamic
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn Dynamic (-> Unit) (:features :js-ffi)
         'render-icon! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-icon! (element label)
             let
-                call $ unsafe-coerce raw/renderIcon $ :: 'Fn
-                  {}
-                    :args $ [] 'Dynamic 'String
-                    :return 'Unit
+                call $ unsafe-coerce raw/renderIcon $ quote
+                  Fn Dynamic String $ -> Unit
               call element label
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Dynamic 'String
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn Dynamic String (-> Unit) (:features :js-ffi)
         'sanitize-voice $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn sanitize-voice (text)
             let
-                call $ unsafe-coerce raw/sanitizeVoice $ :: 'Fn
-                  {}
-                    :args $ [] 'String
-                    :return 'String
+                call $ unsafe-coerce raw/sanitizeVoice $ quote
+                  Fn String $ -> String
               call text
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'String
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String (-> String) (:features :js-ffi)
         'scroll-view! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn scroll-view! ()
             let
-                call $ unsafe-coerce raw/scrollView $ :: 'Fn
-                  {}
-                    :args $ []
-                    :return 'Unit
+                call $ unsafe-coerce raw/scrollView $ quote
+                  Fn $ -> Unit
               call
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn (-> Unit) (:features :js-ffi)
         'show-hud! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn show-hud! (kind text)
             let
-                show $ unsafe-coerce hud! $ :: 'Fn
-                  {}
-                    :args $ [] 'String 'String
-                    :return $ :: 'JsNullish 'JsObject
+                show $ unsafe-coerce hud! $ quote
+                  Fn String String $ -> $ JsNullish JsObject
               show kind text
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'String
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String String (-> Unit) (:features :js-ffi)
         'speak-audio! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-audio! (host text callback)
             let
-                call $ unsafe-coerce raw/speakAudio $ :: 'Fn
-                  {}
-                    :args $ [] 'String 'String $ :: 'Fn
-                      {}
-                        :args $ []
-                        :return 'Unit
-                    :return 'Unit
+                call $ unsafe-coerce raw/speakAudio $ quote
+                  Fn String String
+                    Fn $ -> Unit
+                    -> Unit
               call host text callback
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'String $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String String
+            Fn $ -> Unit
+            -> Unit
+            :features :js-ffi
         'speak-azure! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-azure! (text key callback)
             let
-                call $ unsafe-coerce raw/speakAzure $ :: 'Fn
-                  {}
-                    :args $ [] 'String 'String $ :: 'Fn
-                      {}
-                        :args $ []
-                        :return 'Unit
-                    :return 'Unit
+                call $ unsafe-coerce raw/speakAzure $ quote
+                  Fn String String
+                    Fn $ -> Unit
+                    -> Unit
               call text key callback
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String 'String $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String String
+            Fn $ -> Unit
+            -> Unit
+            :features :js-ffi
         'speak-xunfei! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-xunfei! (text callback)
             let
-                call $ unsafe-coerce raw/speakXunfei $ :: 'Fn
-                  {}
-                    :args $ [] 'String $ :: 'Fn
-                      {}
-                        :args $ []
-                        :return 'Unit
-                    :return 'Unit
+                call $ unsafe-coerce raw/speakXunfei $ quote
+                  Fn String
+                    Fn $ -> Unit
+                    -> Unit
               call text callback
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String
+            Fn $ -> Unit
+            -> Unit
+            :features :js-ffi
         'speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speech! (text callback)
             let
-                call $ unsafe-coerce raw/speech $ :: 'Fn
-                  {}
-                    :args $ [] 'String $ :: 'Fn
-                      {}
-                        :args $ []
-                        :return 'Unit
-                    :return 'Unit
+                call $ unsafe-coerce raw/speech $ quote
+                  Fn String
+                    Fn $ -> Unit
+                    -> Unit
               call text callback
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
-            :features $ #{} :js-ffi
+          :schema $ quote $ Fn String
+            Fn $ -> Unit
+            -> Unit
+            :features :js-ffi
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.browser
           :require (|../assets/browser.mjs :as raw) (js-ffi.browser :as browser) (|./calcit.build-errors :default build-errors) (|bottom-tip :default hud!)
@@ -221,8 +169,7 @@
                   :border $ str "|1px solid " $ hsl 0 0 90
                   :border-radius |2px
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] 'String
+          :schema $ quote $ Fn String (-> respo.schema/Component)
         'comp-container $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-container (reel)
             let
@@ -252,12 +199,9 @@
                         :cursor :pointer
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
-                        hint-fn $ {}
-                          :args $ [] (:: 'Map 'Tag 'Dynamic)
-                            :: 'Fn $ {}
-                              :args $ [] 'Enum
-                              :return 'Unit
-                          :return 'Unit
+                        hint-fn $ Fn (Map Tag Dynamic)
+                          Fn Enum $ -> Unit
+                          -> Unit
                         d! $ :: :states cursor $ assoc state :voice?
                           not $ :voice? state
                         , &unit
@@ -270,8 +214,7 @@
                     decode-map-as (>> states :reel) (:: 'Map 'Dynamic 'Dynamic)
                     , reel $ {}
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
+          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store) (-> respo.schema/Component)
         'comp-header $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-header ()
             div
@@ -282,12 +225,9 @@
               span nil
               span
                 {} $ :on-click $ fn (e d!)
-                  hint-fn $ {}
-                    :args $ [] (:: 'Map 'Tag 'Dynamic)
-                      :: 'Fn $ {}
-                        :args $ [] 'Enum
-                        :return 'Unit
-                    :return 'Unit
+                  hint-fn $ Fn (Map Tag Dynamic)
+                    Fn Enum $ -> Unit
+                    -> Unit
                   host/fullscreen!
                   , &unit
                 <> |Functor&Purity $ {} $ :font-family ui/font-fancy
@@ -298,18 +238,14 @@
                   :vertical-align :middle
                   :cursor :pointer
                 fn (e d!)
-                  hint-fn $ {}
-                    :args $ [] (:: 'Map 'Tag 'Dynamic)
-                      :: 'Fn $ {}
-                        :args $ [] 'Enum
-                        :return 'Unit
-                    :return 'Unit
+                  hint-fn $ Fn (Map Tag Dynamic)
+                    Fn Enum $ -> Unit
+                    -> Unit
                   d! $ schema/Op :clear
                   host/clear-audio!
                   , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ []
+          :schema $ quote $ Fn (-> respo.schema/Component)
         'comp-input $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-input (states)
             let
@@ -325,12 +261,9 @@
                   :placeholder |Reply...
                   :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
-                    hint-fn $ {}
-                      :args $ [] (:: 'Map 'Tag 'Dynamic)
-                        :: 'Fn $ {}
-                          :args $ [] 'Enum
-                          :return 'Unit
-                      :return 'Unit
+                    hint-fn $ Fn (Map Tag Dynamic)
+                      Fn Enum $ -> Unit
+                      -> Unit
                     d! $ :: :states cursor $ assoc state :content
                       decode-map-as
                         .unwrap-or (get e :value) nil
@@ -338,12 +271,9 @@
                     , &unit
                   :autofocus true
                   :on-keydown $ fn (e d!)
-                    hint-fn $ {}
-                      :args $ [] (:: 'Map 'Tag 'Dynamic)
-                        :: 'Fn $ {}
-                          :args $ [] 'Enum
-                          :return 'Unit
-                      :return 'Unit
+                    hint-fn $ Fn (Map Tag Dynamic)
+                      Fn Enum $ -> Unit
+                      -> Unit
                     let
                         event $ .unwrap-or (get e :event) nil
                       when
@@ -357,8 +287,7 @@
                         scroll-view!
                     , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'Map 'Dynamic 'Dynamic
+          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> respo.schema/Component)
         'comp-menu $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-menu (voice?)
             div
@@ -371,12 +300,9 @@
                       {} (:class-name |hover-item)
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
-                          hint-fn $ {}
-                            :args $ [] (:: 'Map 'Tag 'Dynamic)
-                              :: 'Fn $ {}
-                                :args $ [] 'Enum
-                                :return 'Unit
-                            :return 'Unit
+                          hint-fn $ Fn (Map Tag Dynamic)
+                            Fn Enum $ -> Unit
+                            -> Unit
                           host/cancel-speech!
                           if voice?
                             read-content (:messages info) 0 d!
@@ -406,8 +332,7 @@
                           :line-height |16px
               =< nil 80
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] 'Bool
+          :schema $ quote $ Fn Bool (-> respo.schema/Component)
         'comp-message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-message (content)
             div
@@ -439,8 +364,7 @@
                       :line-height |24px
                     comp-md (:text content) ({})
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] 'app.schema/Message
+          :schema $ quote $ Fn app.schema/Message (-> respo.schema/Component)
         'comp-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-messages (ms)
             div
@@ -449,9 +373,7 @@
               list->
                 {} $ :id |message-area
                 map-indexed ms $ fn (idx message)
-                  hint-fn $ {}
-                    :args $ [] 'Number 'app.schema/Message
-                    :return $ :: 'List 'Dynamic
+                  hint-fn $ Fn Number app.schema/Message $ -> (List Dynamic)
                   [] idx $ comp-message message
               if (empty? ms)
                 div
@@ -462,19 +384,16 @@
                     :font-style :italic
               =< nil 80
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Component)
-            :args $ [] $ :: 'List 'app.schema/Message
+          :schema $ quote $ Fn (List app.schema/Message) (-> respo.schema/Component)
         'decode-archive $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-archive (data) (decode-map-as data schema/Archive)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Archive)
-            :args $ [] 'Dynamic
+          :schema $ quote $ Fn Dynamic (-> app.schema/Archive)
         'effect-render-icon $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defeffect effect-render-icon (label) (action el at?)
             host/render-icon! el $ decode-map-as label 'String
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.schema/Effect)
-            :args $ [] 'String
+          :schema $ quote $ Fn String (-> respo.schema/Effect)
         'read-content $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-content (messages idx d!)
             when
@@ -502,17 +421,16 @@
                 scroll-view!
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] (:: 'List 'app.schema/Message) 'Number $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ [] 'Enum
+          :schema $ quote $ Fn (List app.schema/Message) Number
+            Fn Enum $ -> Unit
+            -> Unit
         'reading-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def reading-list
             map
               [] (slurp-data |data/009-ghc-wasm.cirru) (slurp-data |data/008-haskell-generics.cirru) (slurp-data |data/007-immutable-channel.cirru) (slurp-data |data/006-database-perf-usage.cirru) (slurp-data |data/005-talk-cat.cirru) (slurp-data |data/004-web-frontend.cirru) (slurp-data |data/003-tutorial-learning.cirru) (slurp-data |data/002-haskell-hiring.cirru) (slurp-data |data/001-haskell-tiobe.cirru)
               , decode-archive
           :examples $ []
-          :schema $ :: 'List 'app.schema/Archive
+          :schema $ quote $ List app.schema/Archive
           :tests $ [] $ %{} 'TestEntry (:name |preserves-archived-conversations)
             :code $ quote $ do
               assert= 9 $ count reading-list
@@ -523,36 +441,31 @@
         'santinize-voice $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn santinize-voice (text) (host/sanitize-voice text)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'String
+          :schema $ quote $ Fn String (-> String)
         'scroll-view! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn scroll-view! () (host/scroll-view!)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'slurp-data $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro slurp-data (path) (; println "|reading path" path)
             &data-to-code $ parse-cirru-edn $ read-file path
           :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{} :fs-read
-            :expansion $ :: 'Expr 'Dynamic
-            :required $ [] $ :: 'Expr 'String
+          :schema $ quote $ Macro (Expr String)
+            -> $ Expr Dynamic
+            :capabilities :fs-read
         'speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speech! (text cb) (host/speech! text cb)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'String $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
+          :schema $ quote $ Fn String
+            Fn $ -> Unit
+            -> Unit
         'swap-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn swap-messages (messages d!)
             d! $ schema/Op :swap-messages messages
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] (:: 'List 'app.schema/Message)
-              :: 'Fn $ {} (:return 'Unit)
-                :args $ [] 'Enum
+          :schema $ quote $ Fn (List app.schema/Message)
+            Fn Enum $ -> Unit
+            -> Unit
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
           :require (respo-ui.core :as ui)
@@ -573,17 +486,17 @@
           :code $ quote $ def api-target
             .unwrap-or (get-env |api-target) |
           :examples $ []
-          :schema $ :: 'String
+          :schema $ quote String
         'dev? $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def dev?
             = |dev $ .unwrap-or (get-env |mode) |
           :examples $ []
-          :schema $ :: 'Bool
+          :schema $ quote Bool
         'site $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def site
             {} $ :storage-key |hestory
           :examples $ []
-          :schema $ :: 'Map 'Tag 'String
+          :schema $ quote $ Map Tag String
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.config
     'app.main $ %{} 'FileEntry
@@ -591,7 +504,7 @@
         '*reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
-          :schema $ :: 'Ref $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
+          :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             when config/dev? $ match op
@@ -600,8 +513,7 @@
             reset! *reel $ next-reel op
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Enum
+          :schema $ quote $ Fn Enum (-> Unit)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             when config/dev? $ host/formatter!
@@ -613,14 +525,12 @@
             println "|App started."
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn mount-target ()
             narrow-element $ .unwrap $ browser/query-selector |.app
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'respo.dom/DomElement)
-            :args $ []
+          :schema $ quote $ Fn (-> respo.dom/DomElement)
         'next-reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn next-reel (op)
             match (typed/decode-control op)
@@ -628,15 +538,13 @@
               (:none)
                 typed/record-op updater @*reel (schema/decode-op op) (generate-id!) (shared/now-ms)
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Enum
-            :return $ :: 'reel.typed/State 'app.schema/Op 'app.schema/Store
+          :schema $ quote $ Fn Enum
+            -> $ reel.typed/State app.schema/Op app.schema/Store
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             browser/storage-set! |hestory $ format-cirru-edn $ :store @*reel
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
             match (host/build-error)
@@ -647,16 +555,14 @@
                   host/show-hud! |ok~ |Ok
               (:some error-text) (host/show-hud! |error error-text)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render! (mount-target) (comp-container @*reel)
               fn (op)
                 if (enum? op) (dispatch! op) (raise "|render dispatch expected an Enum operation")
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ []
+          :schema $ quote $ Fn (-> Unit)
         'repeat! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn repeat! (duration cb)
             browser/set-timeout!
@@ -664,10 +570,9 @@
               * 1000 duration
             , &unit
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'Unit)
-            :args $ [] 'Number $ :: 'Fn
-              {} (:return 'Unit)
-                :args $ []
+          :schema $ quote $ Fn Number
+            Fn $ -> Unit
+            -> Unit
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
@@ -686,55 +591,55 @@
       :defs $ {}
         'Archive $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Archive (:idx 'String) (:title 'String)
-            :messages $ :: 'List 'app.schema/Message
+            :messages $ quote $ List app.schema/Message
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
-          :schema $ :: 'Enum
+          :schema $ quote Enum
         'FormState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct FormState (:content 'String)
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'Message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Message (:author 'String) (:text 'String)
-            :floor $ :: 'Option 'Number
-            :code? $ :: 'Option 'Bool
+            :floor $ quote $ Option Number
+            :code? $ quote $ Option Bool
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states (:: 'List 'Dynamic) 'Dynamic
+            :states
+              quote $ List Dynamic
+              , 'Dynamic
             :hydrate-storage 'app.schema/Store
             :message 'app.schema/Message
             :clear
-            :swap-messages $ :: 'List 'app.schema/Message
+            :swap-messages $ quote $ List app.schema/Message
           :examples $ []
-          :schema $ :: 'EnumDef
+          :schema $ quote EnumDef
         'RootState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct RootState (:content 'String) (:voice? 'Bool)
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ :: 'Map 'Tag 'Dynamic
-            :messages $ :: 'List 'app.schema/Message
+            :states $ quote $ Map Tag Dynamic
+            :messages $ quote $ List app.schema/Message
           :examples $ []
-          :schema $ :: 'StructDef
+          :schema $ quote StructDef
         'decode-message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-message (raw)
             decode-map-as (storage-map raw) Message
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Message)
-            :args $ [] 'Dynamic
+          :schema $ quote $ Fn Dynamic (-> app.schema/Message)
         'decode-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-messages (raw)
             if (list? raw) (map raw decode-message) (raise |Invalid-message-list)
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Dynamic
-            :return $ :: 'List 'app.schema/Message
+          :schema $ quote $ Fn Dynamic
+            -> $ List app.schema/Message
         'decode-op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-op (op)
             match op
@@ -749,8 +654,7 @@
                 Op :swap-messages $ decode-messages data
               _ $ raise |Unknown-operation
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Op)
-            :args $ [] 'Enum
+          :schema $ quote $ Fn Enum (-> app.schema/Op)
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
@@ -761,8 +665,7 @@
                   :: 'Map 'Tag 'Dynamic
                 , :messages $ decode-messages $ .unwrap-or (get fields :messages) nil
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Store)
-            :args $ [] 'Dynamic
+          :schema $ quote $ Fn Dynamic (-> app.schema/Store)
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
             let
@@ -770,8 +673,7 @@
               if (nil? raw) (FormState :content |)
                 decode-map-as (storage-map raw) FormState
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/FormState)
-            :args $ [] $ :: 'Map 'Dynamic 'Dynamic
+          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/FormState)
         'read-root-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-root-state (states)
             let
@@ -779,8 +681,7 @@
               if (nil? raw) (RootState :content | :voice? false)
                 decode-map-as (storage-map raw) RootState
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/RootState)
-            :args $ [] $ :: 'Map 'Dynamic 'Dynamic
+          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/RootState)
         'state-cursor $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn state-cursor (states)
             let
@@ -788,24 +689,22 @@
               if (nil? raw) ([])
                 decode-map-as raw $ :: 'List 'Dynamic
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] $ :: 'Map 'Dynamic 'Dynamic
-            :return $ :: 'List 'Dynamic
+          :schema $ quote $ Fn (Map Dynamic Dynamic)
+            -> $ List Dynamic
         'storage-map $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn storage-map (raw)
             if (struct? raw) (&struct:to-map raw)
               decode-map-as raw $ :: 'Map 'Tag 'Dynamic
           :examples $ []
-          :schema $ :: 'Fn $ {}
-            :args $ [] 'Dynamic
-            :return $ :: 'Map 'Tag 'Dynamic
+          :schema $ quote $ Fn Dynamic
+            -> $ Map Tag Dynamic
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states
               {} $ :cursor $ []
               , :messages $ []
           :examples $ []
-          :schema $ :: 'app.schema/Store
+          :schema $ quote app.schema/Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -824,8 +723,7 @@
                 assoc store :messages $ []
               (:swap-messages data) (assoc store :messages data)
           :examples $ []
-          :schema $ :: 'Fn $ {} (:return 'app.schema/Store)
-            :args $ [] 'app.schema/Store 'app.schema/Op 'String 'Number
+          :schema $ quote $ Fn app.schema/Store app.schema/Op String Number (-> app.schema/Store)
           :tests $ [] $ %{} 'TestEntry (:name |preserves-message-operations)
             :code $ quote $ let
                 message $ schema/decode-message $ {} (:author |Me) (:text |Hello)
