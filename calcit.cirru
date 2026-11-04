@@ -5,7 +5,7 @@
   :entries $ {} $ :default
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
-      :modules $ [] |respo-feather.calcit/ |respo.calcit/ |memof/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
+      :modules $ [] |respo-feather.calcit/ |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
       :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
   :files $ {}
     'app.browser $ %{} 'FileEntry
@@ -184,7 +184,7 @@
                   {} $ :style $ .merge ui/column
                     {} (:width |28%)
                       :background-color $ hsl 0 0 94
-                  memof1-call comp-menu $ :voice? state
+                  memo-comp-by :comp-menu comp-menu $ :voice? state
                   div
                     {} $ :style $ .merge ui/row-parted
                       {} (:padding "|0 8px") (:user-select :none)
@@ -199,7 +199,7 @@
                         :cursor :pointer
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
-                        hint-fn $ Fn (Map Tag Dynamic)
+                        hint-fn $ Fn respo.schema/RespoEvent
                           Fn Enum $ -> Unit
                           -> Unit
                         d! $ :: :states cursor $ assoc state :voice?
@@ -207,12 +207,15 @@
                         , &unit
                 div
                   {} $ :style $ .merge ui/expand ui/column
-                  memof1-call comp-header
+                  memo-comp-by :comp-header comp-header
                   comp-messages $ :messages store
-                  memof1-call comp-input $ >> states :input
-                  when dev? $ comp-typed-reel
-                    decode-map-as (>> states :reel) (:: 'Map 'Dynamic 'Dynamic)
-                    , reel $ {}
+                  memo-comp-by :comp-input comp-input $ >> states :input
+                  if dev?
+                    Option :some $ comp-typed-reel
+                      decode-map-as (>> states :reel)
+                        quote $ Map Dynamic Dynamic
+                      , reel $ {}
+                    Option :none
           :examples $ []
           :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store) (-> respo.schema/Component)
         'comp-header $ %{} 'CodeEntry (:doc |)
@@ -222,10 +225,10 @@
                 {} (:padding "|4px 6px") (:font-weight 300) (:font-size 16)
                   :background-color $ hsl 0 0 97
                   :border-bottom $ str "|1px solid " $ hsl 0 0 90
-              span nil
+              span $ {}
               span
                 {} $ :on-click $ fn (e d!)
-                  hint-fn $ Fn (Map Tag Dynamic)
+                  hint-fn $ Fn respo.schema/RespoEvent
                     Fn Enum $ -> Unit
                     -> Unit
                   host/fullscreen!
@@ -238,7 +241,7 @@
                   :vertical-align :middle
                   :cursor :pointer
                 fn (e d!)
-                  hint-fn $ Fn (Map Tag Dynamic)
+                  hint-fn $ Fn respo.schema/RespoEvent
                     Fn Enum $ -> Unit
                     -> Unit
                   d! $ schema/Op :clear
@@ -261,28 +264,26 @@
                   :placeholder |Reply...
                   :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
-                    hint-fn $ Fn (Map Tag Dynamic)
+                    hint-fn $ Fn respo.schema/RespoEvent
                       Fn Enum $ -> Unit
                       -> Unit
                     d! $ :: :states cursor $ assoc state :content
-                      decode-map-as
-                        .unwrap-or (get e :value) nil
-                        , 'String
+                      decode-map-as (:value e) 'String
                     , &unit
                   :autofocus true
                   :on-keydown $ fn (e d!)
-                    hint-fn $ Fn (Map Tag Dynamic)
+                    hint-fn $ Fn respo.schema/RespoEvent
                       Fn Enum $ -> Unit
                       -> Unit
                     let
-                        event $ .unwrap-or (get e :event) nil
+                        event $ :event e
                       when
                         = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
-                        host/prevent-default! $ .unwrap-or (get e :event) nil
+                        host/prevent-default! $ :event e
                         d! $ schema/Op :message $ schema/decode-message
                           {} (:author |Me)
                             :text $ .unwrap $ browser/event-target-value
-                              browser/event-host $ .unwrap-or (get e :event) nil
+                              browser/event-host $ :event e
                         d! $ :: :states cursor $ assoc state :content |
                         scroll-view!
                     , &unit
@@ -300,7 +301,7 @@
                       {} (:class-name |hover-item)
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
-                          hint-fn $ Fn (Map Tag Dynamic)
+                          hint-fn $ Fn respo.schema/RespoEvent
                             Fn Enum $ -> Unit
                             -> Unit
                           host/cancel-speech!
@@ -313,15 +314,15 @@
                           :color $ hsl 230 70 70
                           :line-height |14px
                         , nil
-                      =< 2 nil
+                      space-x 2
                       <> (:idx info)
                         {}
                           :color $ hsl 0 0 70
                           :font-size 12
                           :font-family ui/font-code
-                      =< 8 nil
+                      space-x 8
                       <> $ :title info
-                      =< 8 nil
+                      space-x 8
                       <>
                         str $ count $ :messages info
                         {} (:font-size 12)
@@ -330,7 +331,7 @@
                           :padding "|0px 5px"
                           :border-radius |8px
                           :line-height |16px
-              =< nil 80
+              space-y 80
           :examples $ []
           :schema $ quote $ Fn Bool (-> respo.schema/Component)
         'comp-message $ %{} 'CodeEntry (:doc |)
@@ -339,7 +340,7 @@
               {} $ :style $ .merge ui/row
                 {} (:width |98%) (:padding "|4px 10px")
               comp-avatar $ :author content
-              =< 8 nil
+              space-x 8
               div
                 {} $ :style ui/flex
                 div
@@ -369,20 +370,21 @@
           :code $ quote $ defcomp comp-messages (ms)
             div
               {} $ :style ui/expand
-              =< nil 8
+              space-y 8
               list->
                 {} $ :id |message-area
                 map-indexed ms $ fn (idx message)
                   hint-fn $ Fn Number app.schema/Message $ -> (List Dynamic)
                   [] idx $ comp-message message
               if (empty? ms)
-                div
+                Option :some $ div
                   {} $ :style $ .merge ui/center
                     {} $ :padding |40px
                   <> |Cleared. $ {} (:font-family ui/font-fancy) (:font-weight 500)
                     :color $ hsl 0 0 70
                     :font-style :italic
-              =< nil 80
+                Option :none
+              space-y 80
           :examples $ []
           :schema $ quote $ Fn (List app.schema/Message) (-> respo.schema/Component)
         'decode-archive $ %{} 'CodeEntry (:doc |)
@@ -470,12 +472,11 @@
         :code $ quote $ ns app.comp.container
           :require (respo-ui.core :as ui)
             respo-ui.core :refer $ hsl
-            respo.core :refer $ defcomp defeffect <> >> a div button textarea span input list-> create-element
-            respo.comp.space :refer $ =<
+            respo.core :refer $ defcomp defeffect <> >> a div button textarea span input list-> create-element memo-comp-by
+            respo.comp.space :refer $ space-x space-y
             reel.comp.reel :refer $ comp-typed-reel
             respo-md.comp.md :refer $ comp-md
             app.config :refer $ dev? api-target
-            memof.once :refer $ memof1-call
             feather.core :refer $ comp-icon comp-i
             app.schema :as schema
             js-ffi.browser :as browser
@@ -505,12 +506,20 @@
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
           :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
+        'decode-dispatch $ %{} 'CodeEntry
+          :doc "|Decode the original wire Enum once into a concrete application Op or Reel Control; retain both existing decoders and rejection behavior."
+          :code $ quote $ defn decode-dispatch (op)
+            match (typed/decode-control op)
+              (:some control) control
+              (:none) (schema/decode-op op)
+          :examples $ []
+          :schema $ quote $ Fn Enum (-> app.schema/ResolvedOp)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             when config/dev? $ match op
               (:states cursor state) nil
               _ $ println |Dispatch: op
-            reset! *reel $ next-reel op
+            reset! *reel $ next-reel $ decode-dispatch op
             , &unit
           :examples $ []
           :schema $ quote $ Fn Enum (-> Unit)
@@ -533,12 +542,13 @@
           :schema $ quote $ Fn (-> respo.dom/DomElement)
         'next-reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn next-reel (op)
-            match (typed/decode-control op)
-              (:some control) (typed/apply-control updater @*reel control)
-              (:none)
-                typed/record-op updater @*reel (schema/decode-op op) (generate-id!) (shared/now-ms)
+            match op
+              (app.schema/Op action)
+                typed/record-op updater (deref *reel) action (generate-id!) (shared/now-ms)
+              (reel.typed/Control control)
+                typed/apply-control updater (deref *reel) control
           :examples $ []
-          :schema $ quote $ Fn Enum
+          :schema $ quote $ Fn app.schema/ResolvedOp
             -> $ reel.typed/State app.schema/Op app.schema/Store
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
@@ -558,7 +568,8 @@
           :schema $ quote $ Fn (-> Unit)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
-            render! (mount-target) (comp-container @*reel)
+            render-with! (mount-target)
+              fn () $ comp-container @*reel
               fn (op)
                 if (enum? op) (dispatch! op) (raise "|render dispatch expected an Enum operation")
           :examples $ []
@@ -576,7 +587,7 @@
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.main
           :require
-            respo.core :refer $ render! clear-cache!
+            respo.core :refer $ render-with! clear-cache!
             app.comp.container :refer $ comp-container
             app.updater :refer $ updater
             app.schema :as schema
@@ -590,7 +601,7 @@
     'app.schema $ %{} 'FileEntry
       :defs $ {}
         'Archive $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct Archive (:idx 'String) (:title 'String)
+          :code $ quote $ defstruct Archive (:idx String) (:title String)
             :messages $ quote $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
@@ -599,11 +610,11 @@
           :examples $ []
           :schema $ quote Enum
         'FormState $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct FormState (:content 'String)
+          :code $ quote $ defstruct FormState (:content String)
           :examples $ []
           :schema $ quote StructDef
         'Message $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct Message (:author 'String) (:text 'String)
+          :code $ quote $ defstruct Message (:author String) (:text String)
             :floor $ quote $ Option Number
             :code? $ quote $ Option Bool
           :examples $ []
@@ -612,15 +623,20 @@
           :code $ quote $ defenum Op
             :states
               quote $ List Dynamic
-              , 'Dynamic
-            :hydrate-storage 'app.schema/Store
-            :message 'app.schema/Message
+              , Dynamic
+            :hydrate-storage app.schema/Store
+            :message app.schema/Message
             :clear
             :swap-messages $ quote $ List app.schema/Message
           :examples $ []
           :schema $ quote EnumDef
+        'ResolvedOp $ %{} 'CodeEntry
+          :doc "|Closed internal operation after the existing wire decoders: application Op or Reel Control. Raw Respo/DevTools Enum input keeps its original boundary."
+          :code $ quote $ defunion ResolvedOp app.schema/Op reel.typed/Control
+          :examples $ []
+          :schema $ quote UnionDef
         'RootState $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defstruct RootState (:content 'String) (:voice? 'Bool)
+          :code $ quote $ defstruct RootState (:content String) (:voice? Bool)
           :examples $ []
           :schema $ quote StructDef
         'Store $ %{} 'CodeEntry (:doc |)
@@ -662,7 +678,7 @@
               Store :states
                 decode-map-as
                   .unwrap-or (get fields :states) nil
-                  :: 'Map 'Tag 'Dynamic
+                  quote $ Map Tag Dynamic
                 , :messages $ decode-messages $ .unwrap-or (get fields :messages) nil
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> app.schema/Store)
@@ -687,14 +703,14 @@
             let
                 raw $ .unwrap-or (get states :cursor) nil
               if (nil? raw) ([])
-                decode-map-as raw $ :: 'List 'Dynamic
+                decode-map-as raw $ quote $ List Dynamic
           :examples $ []
           :schema $ quote $ Fn (Map Dynamic Dynamic)
             -> $ List Dynamic
         'storage-map $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn storage-map (raw)
             if (struct? raw) (&struct:to-map raw)
-              decode-map-as raw $ :: 'Map 'Tag 'Dynamic
+              decode-map-as raw $ quote $ Map Tag Dynamic
           :examples $ []
           :schema $ quote $ Fn Dynamic
             -> $ Map Tag Dynamic
@@ -715,7 +731,7 @@
               (:states cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
-                  :: 'Map 'Tag 'Dynamic
+                  quote $ Map Tag Dynamic
               (:hydrate-storage data) data
               (:message data)
                 assoc store :messages $ conj (:messages store) data
