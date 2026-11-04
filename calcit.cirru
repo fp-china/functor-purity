@@ -64,16 +64,16 @@
               .prevent-default! event
             , &unit
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn respo.dom/DomEvent (-> Unit) (:features :js-ffi)
         'render-icon! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-icon! (element label)
             let
                 call $ unsafe-coerce raw/renderIcon $ quote
-                  Fn Dynamic String $ -> Unit
+                  Fn respo.dom/DomElement String $ -> Unit
               call element label
             , &unit
           :examples $ []
-          :schema $ quote $ Fn Dynamic String (-> Unit) (:features :js-ffi)
+          :schema $ quote $ Fn respo.dom/DomElement String (-> Unit) (:features :js-ffi)
         'sanitize-voice $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn sanitize-voice (text)
             let

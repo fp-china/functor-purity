@@ -15,11 +15,11 @@ Reel **0.9.0**、Markdown **0.7.1**，传递 Router **0.11.2**。旧 alpha 模�
 
 原 Respo/DevTools 的 Enum 输入合同保持。新增 `ResolvedOp = app.schema/Op | reel.typed/Control`，
 原两套解码器在 `decode-dispatch` 收敛后，内部 `next-reel` 按具体成员穷尽匹配；未知操作仍按原规则拒绝。
-六个 DOM 回调使用 RespoEvent，保留字符串和原生事件的实际检查。可选子节点使用 Option，间距保持原尺寸。
+六个 DOM 回调使用 RespoEvent，原生事件与头像宿主参数进一步标明为 DomEvent/DomElement，保留原有实际检查。可选子节点使用 Option，间距保持原尺寸。
 九份对话、1410 条消息、Message/Store/Op、语音/剪贴板入口、HUD 和部署目录保持。
 
-60 个原定义中，9 个代码体、1 处 schema 变化，51 个定义完全相同，新增上述 union 和解码函数。
-同一 0.34.2 口径下 unresolved **34→22**、codeNil **19→7**；schemaDynamic **18**、真实 JS 函数信任边界 **12** 保持。
+60 个原定义中，10 个代码体、3 处 schema 变化，49 个定义完全相同，新增上述 union 和解码函数。
+同一 0.34.2 口径下 unresolved **34→22**、codeNil **19→7**；schemaDynamic **18→16**，真实 JS 函数信任边界 **12** 保持。
 原完整 strict、两项业务测试与 dynamic-method/deprecated 零门禁保留，不新增强转、预算、永久脚本或测试框架。
 Caps strict 七模块/toolchain、307 个全定义、原两项测试、构建与 immutable 安装通过。
 
