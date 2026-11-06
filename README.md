@@ -8,9 +8,10 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 ### 使用者影响
 
-CLI / `@calcit/procs` 配对正式 **0.34.2**，升级后重新安装整张依赖图、生成 JS 并完整刷新。
-正式模块为 Feather **0.6.0**、UI **0.14.1**、Respo **0.19.2**、JS-FFI **0.2.10**、
-Reel **0.9.0**、Markdown **0.7.1**，传递 Router **0.11.2**。旧 alpha 模块已替换。
+CLI 与 `@calcit/procs` 配对正式 **0.35.1**。升级后重新安装依赖并构建前端。正式模块为 Feather **0.6.2**、UI **0.15.1**、Respo **0.19.4**、JS FFI **0.2.13**、Reel **0.9.2**、Markdown **0.8.1**，传递 Router **0.12.1**。状态路径使用 `CoordKey`，内部语音及消息切换的回调使用应用 `Op`，Respo/DevTools 入口仍接收 Enum。
+
+#### 0.34.2 迁移记录
+
 三个组件缓存使用 Respo 的 `memo-comp-by`，由 `render-with!` 管理帧与失活 key 清理，移除 Memof 依赖。
 
 原 Respo/DevTools 的 Enum 输入合同保持。新增 `ResolvedOp = app.schema/Op | reel.typed/Control`，
