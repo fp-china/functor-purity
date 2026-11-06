@@ -14,8 +14,7 @@
           :code $ quote $ defn build-error ()
             if (js-nullish? build-errors) (Option :none)
               let
-                  convert $ unsafe-coerce raw/buildErrorText $ quote
-                    Fn (JsNullish JsObject) (-> String)
+                  convert $ unsafe-coerce raw/buildErrorText $ Fn (JsNullish JsObject) (-> String)
                 Option :some $ convert build-errors
           :examples $ []
           :schema $ quote $ Fn
@@ -24,8 +23,7 @@
         'cancel-speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn cancel-speech! ()
             let
-                call $ unsafe-coerce raw/cancelSpeech $ quote
-                  Fn $ -> Unit
+                call $ unsafe-coerce raw/cancelSpeech $ Fn (-> Unit)
               call
             , &unit
           :examples $ []
@@ -33,8 +31,7 @@
         'clear-audio! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn clear-audio! ()
             let
-                call $ unsafe-coerce raw/clearAudio $ quote
-                  Fn $ -> Unit
+                call $ unsafe-coerce raw/clearAudio $ Fn (-> Unit)
               call
             , &unit
           :examples $ []
@@ -51,8 +48,7 @@
         'initialize-speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn initialize-speech! ()
             let
-                call $ unsafe-coerce raw/initializeSpeech $ quote
-                  Fn $ -> Unit
+                call $ unsafe-coerce raw/initializeSpeech $ Fn (-> Unit)
               call
             , &unit
           :examples $ []
@@ -68,8 +64,7 @@
         'render-icon! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-icon! (element label)
             let
-                call $ unsafe-coerce raw/renderIcon $ quote
-                  Fn respo.dom/DomElement String $ -> Unit
+                call $ unsafe-coerce raw/renderIcon $ Fn respo.dom/DomElement String (-> Unit)
               call element label
             , &unit
           :examples $ []
@@ -77,16 +72,14 @@
         'sanitize-voice $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn sanitize-voice (text)
             let
-                call $ unsafe-coerce raw/sanitizeVoice $ quote
-                  Fn String $ -> String
+                call $ unsafe-coerce raw/sanitizeVoice $ Fn String (-> String)
               call text
           :examples $ []
           :schema $ quote $ Fn String (-> String) (:features :js-ffi)
         'scroll-view! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn scroll-view! ()
             let
-                call $ unsafe-coerce raw/scrollView $ quote
-                  Fn $ -> Unit
+                call $ unsafe-coerce raw/scrollView $ Fn (-> Unit)
               call
             , &unit
           :examples $ []
@@ -94,8 +87,8 @@
         'show-hud! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn show-hud! (kind text)
             let
-                show $ unsafe-coerce hud! $ quote
-                  Fn String String $ -> $ JsNullish JsObject
+                show $ unsafe-coerce hud! $ Fn String String
+                  -> $ JsNullish JsObject
               show kind text
             , &unit
           :examples $ []
@@ -103,10 +96,9 @@
         'speak-audio! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-audio! (host text callback)
             let
-                call $ unsafe-coerce raw/speakAudio $ quote
-                  Fn String String
-                    Fn $ -> Unit
-                    -> Unit
+                call $ unsafe-coerce raw/speakAudio $ Fn String String
+                  Fn $ -> Unit
+                  -> Unit
               call host text callback
             , &unit
           :examples $ []
@@ -117,10 +109,9 @@
         'speak-azure! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-azure! (text key callback)
             let
-                call $ unsafe-coerce raw/speakAzure $ quote
-                  Fn String String
-                    Fn $ -> Unit
-                    -> Unit
+                call $ unsafe-coerce raw/speakAzure $ Fn String String
+                  Fn $ -> Unit
+                  -> Unit
               call text key callback
             , &unit
           :examples $ []
@@ -131,10 +122,9 @@
         'speak-xunfei! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speak-xunfei! (text callback)
             let
-                call $ unsafe-coerce raw/speakXunfei $ quote
-                  Fn String
-                    Fn $ -> Unit
-                    -> Unit
+                call $ unsafe-coerce raw/speakXunfei $ Fn String
+                  Fn $ -> Unit
+                  -> Unit
               call text callback
             , &unit
           :examples $ []
@@ -145,10 +135,9 @@
         'speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speech! (text callback)
             let
-                call $ unsafe-coerce raw/speech $ quote
-                  Fn String
-                    Fn $ -> Unit
-                    -> Unit
+                call $ unsafe-coerce raw/speech $ Fn String
+                  Fn $ -> Unit
+                  -> Unit
               call text callback
             , &unit
           :examples $ []
@@ -200,7 +189,7 @@
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
                         hint-fn $ Fn respo.schema/RespoEvent
-                          Fn Enum $ -> Unit
+                          Fn AnyEnum $ -> Unit
                           -> Unit
                         d! $ :: :states cursor $ assoc state :voice?
                           not $ :voice? state
@@ -212,8 +201,7 @@
                   memo-comp-by :comp-input comp-input $ >> states :input
                   if dev?
                     Option :some $ comp-typed-reel
-                      decode-map-as (>> states :reel)
-                        quote $ Map Dynamic Dynamic
+                      decode-map-as (>> states :reel) (Map Dynamic Dynamic)
                       , reel $ {}
                     Option :none
           :examples $ []
@@ -229,7 +217,7 @@
               span
                 {} $ :on-click $ fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn Enum $ -> Unit
+                    Fn AnyEnum $ -> Unit
                     -> Unit
                   host/fullscreen!
                   , &unit
@@ -242,7 +230,7 @@
                   :cursor :pointer
                 fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn Enum $ -> Unit
+                    Fn AnyEnum $ -> Unit
                     -> Unit
                   d! $ schema/Op :clear
                   host/clear-audio!
@@ -265,7 +253,7 @@
                   :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn Enum $ -> Unit
+                      Fn AnyEnum $ -> Unit
                       -> Unit
                     d! $ :: :states cursor $ assoc state :content
                       decode-map-as (:value e) 'String
@@ -273,7 +261,7 @@
                   :autofocus true
                   :on-keydown $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn Enum $ -> Unit
+                      Fn AnyEnum $ -> Unit
                       -> Unit
                     let
                         event $ :event e
@@ -302,7 +290,7 @@
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
                           hint-fn $ Fn respo.schema/RespoEvent
-                            Fn Enum $ -> Unit
+                            Fn AnyEnum $ -> Unit
                             -> Unit
                           host/cancel-speech!
                           if voice?
@@ -424,7 +412,7 @@
             , &unit
           :examples $ []
           :schema $ quote $ Fn (List app.schema/Message) Number
-            Fn Enum $ -> Unit
+            Fn app.schema/Op $ -> Unit
             -> Unit
         'reading-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def reading-list
@@ -466,7 +454,7 @@
             d! $ schema/Op :swap-messages messages
           :examples $ []
           :schema $ quote $ Fn (List app.schema/Message)
-            Fn Enum $ -> Unit
+            Fn app.schema/Op $ -> Unit
             -> Unit
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
@@ -513,7 +501,7 @@
               (:some control) control
               (:none) (schema/decode-op op)
           :examples $ []
-          :schema $ quote $ Fn Enum (-> app.schema/ResolvedOp)
+          :schema $ quote $ Fn AnyEnum (-> app.schema/ResolvedOp)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             when config/dev? $ match op
@@ -522,7 +510,7 @@
             reset! *reel $ next-reel $ decode-dispatch op
             , &unit
           :examples $ []
-          :schema $ quote $ Fn Enum (-> Unit)
+          :schema $ quote $ Fn AnyEnum (-> Unit)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             when config/dev? $ host/formatter!
@@ -602,32 +590,30 @@
       :defs $ {}
         'Archive $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Archive (:idx String) (:title String)
-            :messages $ quote $ List app.schema/Message
+            :messages $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
         'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
-          :schema $ quote Enum
+          :schema $ quote AnyEnum
         'FormState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct FormState (:content String)
           :examples $ []
           :schema $ quote StructDef
         'Message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Message (:author String) (:text String)
-            :floor $ quote $ Option Number
-            :code? $ quote $ Option Bool
+            :floor $ Option Number
+            :code? $ Option Bool
           :examples $ []
           :schema $ quote StructDef
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states
-              quote $ List Dynamic
-              , Dynamic
+            :states (List respo.schema/CoordKey) Dynamic
             :hydrate-storage app.schema/Store
             :message app.schema/Message
             :clear
-            :swap-messages $ quote $ List app.schema/Message
+            :swap-messages $ List app.schema/Message
           :examples $ []
           :schema $ quote EnumDef
         'ResolvedOp $ %{} 'CodeEntry
@@ -641,8 +627,8 @@
           :schema $ quote StructDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ quote $ Map Tag Dynamic
-            :messages $ quote $ List app.schema/Message
+            :states $ Map Tag Dynamic
+            :messages $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
         'decode-message $ %{} 'CodeEntry (:doc |)
@@ -660,7 +646,11 @@
           :code $ quote $ defn decode-op (op)
             match op
               (:states cursor state)
-                if (list? cursor) (Op :states cursor state) (raise |Invalid-state-cursor)
+                if (list? cursor)
+                  Op :states
+                    decode-map-as cursor $ List respo.schema/CoordKey
+                    , state
+                  raise |Invalid-state-cursor
               (:hydrate-storage data)
                 Op :hydrate-storage $ decode-store data
               (:message data)
@@ -670,7 +660,7 @@
                 Op :swap-messages $ decode-messages data
               _ $ raise |Unknown-operation
           :examples $ []
-          :schema $ quote $ Fn Enum (-> app.schema/Op)
+          :schema $ quote $ Fn AnyEnum (-> app.schema/Op)
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
@@ -678,7 +668,7 @@
               Store :states
                 decode-map-as
                   .unwrap-or (get fields :states) nil
-                  quote $ Map Tag Dynamic
+                  Map Tag Dynamic
                 , :messages $ decode-messages $ .unwrap-or (get fields :messages) nil
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> app.schema/Store)
@@ -703,14 +693,14 @@
             let
                 raw $ .unwrap-or (get states :cursor) nil
               if (nil? raw) ([])
-                decode-map-as raw $ quote $ List Dynamic
+                decode-map-as raw $ List respo.schema/CoordKey
           :examples $ []
           :schema $ quote $ Fn (Map Dynamic Dynamic)
-            -> $ List Dynamic
+            -> $ List respo.schema/CoordKey
         'storage-map $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn storage-map (raw)
             if (struct? raw) (&struct:to-map raw)
-              decode-map-as raw $ quote $ Map Tag Dynamic
+              decode-map-as raw $ Map Tag Dynamic
           :examples $ []
           :schema $ quote $ Fn Dynamic
             -> $ Map Tag Dynamic
@@ -731,7 +721,7 @@
               (:states cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
-                  quote $ Map Tag Dynamic
+                  Map Tag Dynamic
               (:hydrate-storage data) data
               (:message data)
                 assoc store :messages $ conj (:messages store) data
