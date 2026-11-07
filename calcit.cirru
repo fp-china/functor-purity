@@ -6,7 +6,7 @@
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
       :modules $ [] |respo-feather.calcit/ |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
-      :type-slots $ {} $ :dispatch-op |app.schema/DispatchOp
+      :type-slots $ {} $ :dispatch-op 'app.schema/DispatchOp
   :files $ {}
     'app.browser $ %{} 'FileEntry
       :defs $ {}
@@ -189,9 +189,9 @@
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
                         hint-fn $ Fn respo.schema/RespoEvent
-                          Fn AnyEnum $ -> Unit
+                          Fn app.schema/Op $ -> Unit
                           -> Unit
-                        d! $ :: :states cursor $ assoc state :voice?
+                        d! $ app.schema/Op :edit-state cursor $ assoc state :voice?
                           not $ :voice? state
                         , &unit
                 div
@@ -217,7 +217,7 @@
               span
                 {} $ :on-click $ fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn AnyEnum $ -> Unit
+                    Fn app.schema/Op $ -> Unit
                     -> Unit
                   host/fullscreen!
                   , &unit
@@ -230,7 +230,7 @@
                   :cursor :pointer
                 fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn AnyEnum $ -> Unit
+                    Fn app.schema/Op $ -> Unit
                     -> Unit
                   d! $ schema/Op :clear
                   host/clear-audio!
@@ -253,15 +253,15 @@
                   :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn AnyEnum $ -> Unit
+                      Fn app.schema/Op $ -> Unit
                       -> Unit
-                    d! $ :: :states cursor $ assoc state :content
+                    d! $ app.schema/Op :edit-state cursor $ assoc state :content
                       decode-map-as (:value e) 'String
                     , &unit
                   :autofocus true
                   :on-keydown $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn AnyEnum $ -> Unit
+                      Fn app.schema/Op $ -> Unit
                       -> Unit
                     let
                         event $ :event e
@@ -272,7 +272,7 @@
                           {} (:author |Me)
                             :text $ .unwrap $ browser/event-target-value
                               browser/event-host $ :event e
-                        d! $ :: :states cursor $ assoc state :content |
+                        d! $ app.schema/Op :edit-state cursor $ assoc state :content |
                         scroll-view!
                     , &unit
           :examples $ []
@@ -290,7 +290,7 @@
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
                           hint-fn $ Fn respo.schema/RespoEvent
-                            Fn AnyEnum $ -> Unit
+                            Fn app.schema/Op $ -> Unit
                             -> Unit
                           host/cancel-speech!
                           if voice?
@@ -497,9 +497,14 @@
         'decode-dispatch $ %{} 'CodeEntry
           :doc "|Decode the original wire Enum once into a concrete application Op or Reel Control; retain both existing decoders and rejection behavior."
           :code $ quote $ defn decode-dispatch (op)
-            match (typed/decode-control op)
-              (:some control) control
-              (:none) (schema/decode-op op)
+            cond
+                = (enum-definition op) (Option :some schema/Op)
+                decode-map-as op 'app.schema/Op
+              (= (enum-definition op) (Option :some typed/Control))
+                decode-map-as op 'reel.typed/Control
+              true $ match (typed/decode-control op)
+                (:some control) control
+                (:none) (schema/decode-op op)
           :examples $ []
           :schema $ quote $ Fn AnyEnum (-> app.schema/ResolvedOp)
         'dispatch! $ %{} 'CodeEntry (:doc |)
@@ -597,6 +602,10 @@
           :code $ quote $ def DispatchOp (:: :unhandled)
           :examples $ []
           :schema $ quote AnyEnum
+        'EditorState $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion EditorState RootState FormState
+          :examples $ []
+          :schema $ quote UnionDef
         'FormState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct FormState (:content String)
           :examples $ []
@@ -610,6 +619,7 @@
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
             :states (List respo.schema/CoordKey) Dynamic
+            :edit-state (List respo.schema/CoordKey) app.schema/EditorState
             :hydrate-storage app.schema/Store
             :message app.schema/Message
             :clear
@@ -667,33 +677,36 @@
                 fields $ storage-map raw
               Store :states
                 decode-map-as
-                  .unwrap-or (get fields :states) nil
+                  .unwrap $ get fields :states
                   Map Tag Dynamic
-                , :messages $ decode-messages $ .unwrap-or (get fields :messages) nil
+                , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> app.schema/Store)
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
-            let
-                raw $ .unwrap-or (get states :data) nil
-              if (nil? raw) (FormState :content |)
-                decode-map-as (storage-map raw) FormState
+            match (get states :data)
+              (:some raw)
+                if (nil? raw) (FormState :content |)
+                  decode-map-as (storage-map raw) FormState
+              (:none) (FormState :content |)
           :examples $ []
           :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/FormState)
         'read-root-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-root-state (states)
-            let
-                raw $ .unwrap-or (get states :data) nil
-              if (nil? raw) (RootState :content | :voice? false)
-                decode-map-as (storage-map raw) RootState
+            match (get states :data)
+              (:some raw)
+                if (nil? raw) (RootState :content | :voice? false)
+                  decode-map-as (storage-map raw) RootState
+              (:none) (RootState :content | :voice? false)
           :examples $ []
           :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/RootState)
         'state-cursor $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn state-cursor (states)
-            let
-                raw $ .unwrap-or (get states :cursor) nil
-              if (nil? raw) ([])
-                decode-map-as raw $ List respo.schema/CoordKey
+            match (get states :cursor)
+              (:some raw)
+                if (nil? raw) ([])
+                  decode-map-as raw $ List respo.schema/CoordKey
+              (:none) ([])
           :examples $ []
           :schema $ quote $ Fn (Map Dynamic Dynamic)
             -> $ List respo.schema/CoordKey
@@ -719,6 +732,10 @@
           :code $ quote $ defn updater (store op op-id op-time)
             match op
               (:states cursor state)
+                assoc store :states $ decode-map-as
+                  update-state-tree (:states store) cursor state
+                  Map Tag Dynamic
+              (:edit-state cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
                   Map Tag Dynamic
