@@ -359,11 +359,11 @@
             div
               {} $ :style ui/expand
               space-y 8
-              list->
+              respo.core/keyed->
                 {} $ :id |message-area
                 map-indexed ms $ fn (idx message)
-                  hint-fn $ Fn Number app.schema/Message $ -> (List Dynamic)
-                  [] idx $ comp-message message
+                  hint-fn $ Fn Number app.schema/Message $ -> respo.schema/ChildPair
+                  respo.core/keyed-component idx $ comp-message message
               if (empty? ms)
                 Option :some $ div
                   {} $ :style $ .merge ui/center
@@ -509,13 +509,14 @@
           :schema $ quote $ Fn AnyEnum (-> app.schema/ResolvedOp)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
-            when config/dev? $ match op
-              (:states cursor state) nil
-              _ $ println |Dispatch: op
-            reset! *reel $ next-reel $ decode-dispatch op
+            reset! *reel $ match op
+              (app.schema/Op action)
+                typed/record-op updater (deref *reel) action (generate-id!) (shared/now-ms)
+              (reel.typed/Control control)
+                typed/apply-control updater (deref *reel) control
             , &unit
           :examples $ []
-          :schema $ quote $ Fn AnyEnum (-> Unit)
+          :schema $ quote $ Fn app.schema/ResolvedOp (-> Unit)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             when config/dev? $ host/formatter!
@@ -523,7 +524,7 @@
             host/initialize-speech!
             render-app!
             add-watch! *reel :changes $ fn (reel prev) (render-app!)
-            listen-devtools! |k dispatch!
+            listen-devtools-toggle! |k $ fn () $ dispatch! (reel.typed/Control :toggle)
             println "|App started."
             , &unit
           :examples $ []
@@ -533,16 +534,6 @@
             narrow-element $ .unwrap $ browser/query-selector |.app
           :examples $ []
           :schema $ quote $ Fn (-> respo.dom/DomElement)
-        'next-reel $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn next-reel (op)
-            match op
-              (app.schema/Op action)
-                typed/record-op updater (deref *reel) action (generate-id!) (shared/now-ms)
-              (reel.typed/Control control)
-                typed/apply-control updater (deref *reel) control
-          :examples $ []
-          :schema $ quote $ Fn app.schema/ResolvedOp
-            -> $ reel.typed/State app.schema/Op app.schema/Store
         'persist-storage! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn persist-storage! ()
             browser/storage-set! |hestory $ format-cirru-edn $ :store @*reel
@@ -564,7 +555,13 @@
             render-with! (mount-target)
               fn () $ comp-container @*reel
               fn (op)
-                if (enum? op) (dispatch! op) (raise "|render dispatch expected an Enum operation")
+                if (enum? op)
+                  do
+                    when config/dev? $ match op
+                      (:states cursor state) nil
+                      _ $ println |Dispatch: op
+                    dispatch! $ decode-dispatch op
+                  raise "|render dispatch expected an Enum operation"
           :examples $ []
           :schema $ quote $ Fn (-> Unit)
         'repeat! $ %{} 'CodeEntry (:doc |)
@@ -584,7 +581,7 @@
             app.comp.container :refer $ comp-container
             app.updater :refer $ updater
             app.schema :as schema
-            reel.util :refer $ listen-devtools!
+            reel.util :refer $ listen-devtools-toggle!
             app.config :as config
             reel.typed :as typed
             js-ffi.shared :as shared

@@ -8,7 +8,7 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 ### 使用者影响
 
-CLI 与 `@calcit/procs` 配对正式 **0.37.0**。升级后重新安装依赖并构建前端。正式模块为 Feather **0.6.3**、UI **0.15.2**、Respo **0.19.5**、JS FFI **0.2.13**、Reel **0.10.0**、Markdown **0.8.2**，传递 Router **0.12.2**。状态路径使用 `CoordKey`，表单和页面事件使用 `RootState | FormState`。Respo 和 DevTools 仍接收框架枚举，具名应用与回放事件在入口区分。
+CLI 与 `@calcit/procs` 配对正式 **0.38.0**。升级后重新安装依赖并构建前端。正式模块为 Feather **0.6.3**、UI **0.15.2**、Respo **0.19.5**、JS FFI **0.2.13**、Reel **0.10.0**、Markdown **0.8.2**，传递 Router **0.12.2**。状态路径使用 `CoordKey`，表单和页面事件使用 `RootState | FormState`。应用派发使用 `Op | reel.typed/Control`，渲染入口解码旧框架枚举，快捷键直接构造具名 Reel 控制。消息列表用 Respo `ChildPair` 保留原数字键和顺序。
 
 #### 0.34.2 迁移记录
 
