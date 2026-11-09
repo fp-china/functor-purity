@@ -2,7 +2,7 @@
   :dependencies $ {}
     |calcit-lang/js-ffi |0.2.13
     |Respo/respo.calcit |0.19.5
-    |Respo/reel.calcit |0.10.0
+    |Respo/reel.calcit |0.11.0
     |Respo/respo-markdown.calcit |0.8.2
     |Respo/respo-ui.calcit |0.15.2
     |Respo/respo-feather.calcit |0.6.3
