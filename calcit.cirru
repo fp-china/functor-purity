@@ -6,7 +6,7 @@
     {} (:description |) (:init-fn 'app.main/main!) (:mode :js) (:reload-fn 'app.main/reload!) (:target :browser)
       :feature-policy $ {}
       :modules $ [] |respo-feather.calcit/ |respo.calcit/ |respo-ui.calcit/ |respo-markdown.calcit/ |reel.calcit/ |js-ffi/
-      :type-slots $ {} $ :dispatch-op 'app.schema/DispatchOp
+      :type-slots $ {} $ :dispatch-op 'app.schema/Op
   :files $ {}
     'app.browser $ %{} 'FileEntry
       :defs $ {}
@@ -160,7 +160,7 @@
           :examples $ []
           :schema $ quote $ Fn String (-> respo.schema/Component)
         'comp-container $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defcomp comp-container (reel)
+          :code $ quote $ defcomp comp-container (reel on-control)
             let
                 store $ :store reel
                 states $ :states store
@@ -202,10 +202,12 @@
                   if dev?
                     Option :some $ comp-typed-reel
                       decode-map-as (>> states :reel) (Map Dynamic Dynamic)
-                      , reel $ {}
+                      , reel ({}) on-control
                     Option :none
           :examples $ []
-          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store) (-> respo.schema/Component)
+          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store)
+            Fn reel.typed/Control $ -> Unit
+            -> respo.schema/Component
         'comp-header $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-header ()
             div
@@ -268,10 +270,8 @@
                       when
                         = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
                         host/prevent-default! $ :event e
-                        d! $ schema/Op :message $ schema/decode-message
-                          {} (:author |Me)
-                            :text $ .unwrap $ browser/event-target-value
-                              browser/event-host $ :event e
+                        d! $ schema/Op :message $ schema/Message :author |Me :floor (Option :none) :code? (Option :none) :text
+                          .unwrap $ browser/event-target-value $ browser/event-host (:event e)
                         d! $ app.schema/Op :edit-state cursor $ assoc state :content |
                         scroll-view!
                     , &unit
@@ -494,19 +494,6 @@
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
           :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
-        'decode-dispatch $ %{} 'CodeEntry
-          :doc "|Decode the original wire Enum once into a concrete application Op or Reel Control; retain both existing decoders and rejection behavior."
-          :code $ quote $ defn decode-dispatch (op)
-            cond
-                = (enum-definition op) (Option :some schema/Op)
-                decode-map-as op 'app.schema/Op
-              (= (enum-definition op) (Option :some typed/Control))
-                decode-map-as op 'reel.typed/Control
-              true $ match (typed/decode-control op)
-                (:some control) control
-                (:none) (schema/decode-op op)
-          :examples $ []
-          :schema $ quote $ Fn AnyEnum (-> app.schema/ResolvedOp)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             reset! *reel $ match op
@@ -553,15 +540,13 @@
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render-with! (mount-target)
-              fn () $ comp-container @*reel
+              fn () $ comp-container @*reel $ fn (control)
+                hint-fn $ Fn reel.typed/Control $ -> Unit
+                dispatch! control
               fn (op)
-                if (enum? op)
-                  do
-                    when config/dev? $ match op
-                      (:states cursor state) nil
-                      _ $ println |Dispatch: op
-                    dispatch! $ decode-dispatch op
-                  raise "|render dispatch expected an Enum operation"
+                hint-fn $ Fn app.schema/Op $ -> Unit
+                when config/dev? $ println |Dispatch: op
+                dispatch! op
           :examples $ []
           :schema $ quote $ Fn (-> Unit)
         'repeat! $ %{} 'CodeEntry (:doc |)
@@ -595,10 +580,6 @@
             :messages $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
-        'DispatchOp $ %{} 'CodeEntry (:doc "|Respo 入口事件合同，容纳应用和 Reel 控制事件；代表值不发送。")
-          :code $ quote $ def DispatchOp (:: :unhandled)
-          :examples $ []
-          :schema $ quote AnyEnum
         'EditorState $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defunion EditorState RootState FormState
           :examples $ []
@@ -615,7 +596,6 @@
           :schema $ quote StructDef
         'Op $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defenum Op
-            :states (List respo.schema/CoordKey) Dynamic
             :edit-state (List respo.schema/CoordKey) app.schema/EditorState
             :hydrate-storage app.schema/Store
             :message app.schema/Message
@@ -649,25 +629,6 @@
           :examples $ []
           :schema $ quote $ Fn Dynamic
             -> $ List app.schema/Message
-        'decode-op $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn decode-op (op)
-            match op
-              (:states cursor state)
-                if (list? cursor)
-                  Op :states
-                    decode-map-as cursor $ List respo.schema/CoordKey
-                    , state
-                  raise |Invalid-state-cursor
-              (:hydrate-storage data)
-                Op :hydrate-storage $ decode-store data
-              (:message data)
-                Op :message $ decode-message data
-              (:clear) (Op :clear)
-              (:swap-messages data)
-                Op :swap-messages $ decode-messages data
-              _ $ raise |Unknown-operation
-          :examples $ []
-          :schema $ quote $ Fn AnyEnum (-> app.schema/Op)
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
@@ -728,10 +689,6 @@
         %{} 'CodeEntry (:doc |)
           :code $ quote $ defn updater (store op op-id op-time)
             match op
-              (:states cursor state)
-                assoc store :states $ decode-map-as
-                  update-state-tree (:states store) cursor state
-                  Map Tag Dynamic
               (:edit-state cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
@@ -753,7 +710,7 @@
                   , |id 0
                 cleared $ updater added (schema/Op :clear) |id 0
                 hydrated $ updater schema/store
-                  schema/decode-op $ :: :hydrate-storage $ &struct:to-map added
+                  schema/Op :hydrate-storage $ schema/decode-store $ &struct:to-map added
                   , |id 0
               assert= ([] message) (:messages added)
               assert= (:messages added) (:messages swapped)
