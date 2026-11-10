@@ -376,15 +376,40 @@
               space-y 80
           :examples $ []
           :schema $ quote $ Fn (List app.schema/Message) (-> respo.schema/Component)
-        'decode-archive $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn decode-archive (data) (decode-map-as data schema/Archive)
-          :examples $ []
-          :schema $ quote $ Fn Dynamic (-> app.schema/Archive)
         'effect-render-icon $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defeffect effect-render-icon (label) (action el at?)
             host/render-icon! el $ decode-map-as label 'String
           :examples $ []
           :schema $ quote $ Fn String (-> respo.schema/Effect)
+        'load-archive $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defmacro load-archive (path)
+            let
+                archive $ decode-map-as
+                  parse-cirru-edn $ read-file path
+                  , schema/Archive
+                idx $ :idx archive
+                title $ :title archive
+                messages $ map (:messages archive)
+                  fn (message)
+                    let
+                        author $ :author message
+                        body $ :text message
+                        code-form $ match (:code? message)
+                          (:some code?)
+                            quasiquote $ calcit.core/Option :some ~code?
+                          (:none)
+                            quote $ calcit.core/Option :none
+                        floor-form $ match (:floor message)
+                          (:some floor-value)
+                            quasiquote $ calcit.core/Option :some ~floor-value
+                          (:none)
+                            quote $ calcit.core/Option :none
+                      quasiquote $ app.schema/Message :author ~author :text ~body :code? ~code-form :floor ~floor-form
+              quasiquote $ app.schema/Archive :idx ~idx :title ~title :messages $ [] ~@messages
+          :examples $ []
+          :schema $ quote $ Macro (Expr String)
+            -> $ Expr app.schema/Archive
+            :capabilities :fs-read
         'read-content $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-content (messages idx d!)
             when
@@ -417,9 +442,7 @@
             -> Unit
         'reading-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def reading-list
-            map
-              [] (slurp-data |data/009-ghc-wasm.cirru) (slurp-data |data/008-haskell-generics.cirru) (slurp-data |data/007-immutable-channel.cirru) (slurp-data |data/006-database-perf-usage.cirru) (slurp-data |data/005-talk-cat.cirru) (slurp-data |data/004-web-frontend.cirru) (slurp-data |data/003-tutorial-learning.cirru) (slurp-data |data/002-haskell-hiring.cirru) (slurp-data |data/001-haskell-tiobe.cirru)
-              , decode-archive
+            [] (load-archive |data/009-ghc-wasm.cirru) (load-archive |data/008-haskell-generics.cirru) (load-archive |data/007-immutable-channel.cirru) (load-archive |data/006-database-perf-usage.cirru) (load-archive |data/005-talk-cat.cirru) (load-archive |data/004-web-frontend.cirru) (load-archive |data/003-tutorial-learning.cirru) (load-archive |data/002-haskell-hiring.cirru) (load-archive |data/001-haskell-tiobe.cirru)
           :examples $ []
           :schema $ quote $ List app.schema/Archive
           :tests $ [] $ %{} 'TestEntry (:name |preserves-archived-conversations)
@@ -437,13 +460,6 @@
           :code $ quote $ defn scroll-view! () (host/scroll-view!)
           :examples $ []
           :schema $ quote $ Fn (-> Unit)
-        'slurp-data $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defmacro slurp-data (path) (; println "|reading path" path)
-            &data-to-code $ parse-cirru-edn $ read-file path
-          :examples $ []
-          :schema $ quote $ Macro (Expr String)
-            -> $ Expr Dynamic
-            :capabilities :fs-read
         'speech! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn speech! (text cb) (host/speech! text cb)
           :examples $ []
