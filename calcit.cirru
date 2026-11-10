@@ -282,9 +282,10 @@
             div
               {} $ :style $ .merge ui/expand
                 {} (:padding "|16px 0") (:line-height |36px)
-              list-> ({})
+              respo.core/keyed-> ({})
                 -> reading-list $ map $ fn (info)
-                  [] (:idx info)
+                  hint-fn $ Fn app.schema/Archive $ -> respo.schema/ChildPair
+                  respo.core/keyed-element (:idx info)
                     div
                       {} (:class-name |hover-item)
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
@@ -460,7 +461,7 @@
         :code $ quote $ ns app.comp.container
           :require (respo-ui.core :as ui)
             respo-ui.core :refer $ hsl
-            respo.core :refer $ defcomp defeffect <> >> a div button textarea span input list-> create-element memo-comp-by
+            respo.core :refer $ defcomp defeffect <> >> a div button textarea span input create-element memo-comp-by
             respo.comp.space :refer $ space-x space-y
             reel.comp.reel :refer $ comp-typed-reel
             respo-md.comp.md :refer $ comp-md
