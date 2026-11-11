@@ -12,10 +12,9 @@
       :defs $ {}
         'build-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn build-error ()
-            if (js-nullish? build-errors) (Option :none)
-              let
-                  convert $ unsafe-coerce raw/buildErrorText $ Fn (JsNullish JsObject) (-> String)
-                Option :some $ convert build-errors
+            if (js-nullish? build-errors) None $ let
+                convert $ unsafe-coerce raw/buildErrorText $ Fn (JsNullish JsObject) (-> String)
+              Some $ convert build-errors
           :examples $ []
           :schema $ quote $ Fn
             -> $ Option String
@@ -200,12 +199,12 @@
                   comp-messages $ :messages store
                   memo-comp-by :comp-input comp-input $ >> states :input
                   if dev?
-                    Option :some $ comp-typed-reel
+                    Some $ comp-typed-reel
                       decode-map-as (>> states :reel) (Map Dynamic Dynamic)
                       , reel ({}) on-control
-                    Option :none
+                    , None
           :examples $ []
-          :schema $ quote $ Fn (reel.typed/State app.schema/Op app.schema/Store)
+          :schema $ quote $ Fn (reel.typed/State schema/Op schema/Store)
             Fn reel.typed/Control $ -> Unit
             -> respo.schema/Component
         'comp-header $ %{} 'CodeEntry (:doc |)
@@ -270,13 +269,13 @@
                       when
                         = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
                         host/prevent-default! $ :event e
-                        d! $ schema/Op :message $ schema/Message :author |Me :floor (Option :none) :code? (Option :none) :text
+                        d! $ schema/Op :message $ schema/Message :author |Me :floor None :code? None :text
                           .unwrap $ browser/event-target-value $ browser/event-host (:event e)
                         d! $ app.schema/Op :edit-state cursor $ assoc state :content |
                         scroll-view!
                     , &unit
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> respo.schema/Component)
+          :schema $ quote $ Fn (Map Dynamic StateValue) (-> respo.schema/Component) (:generics StateValue)
         'comp-menu $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-menu (voice?)
             div
@@ -354,7 +353,7 @@
                       :line-height |24px
                     comp-md (:text content) ({})
           :examples $ []
-          :schema $ quote $ Fn app.schema/Message (-> respo.schema/Component)
+          :schema $ quote $ Fn schema/Message (-> respo.schema/Component)
         'comp-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-messages (ms)
             div
@@ -366,16 +365,16 @@
                   hint-fn $ Fn Number app.schema/Message $ -> respo.schema/ChildPair
                   respo.core/keyed-component idx $ comp-message message
               if (empty? ms)
-                Option :some $ div
+                Some $ div
                   {} $ :style $ .merge ui/center
                     {} $ :padding |40px
                   <> |Cleared. $ {} (:font-family ui/font-fancy) (:font-weight 500)
                     :color $ hsl 0 0 70
                     :font-style :italic
-                Option :none
+                , None
               space-y 80
           :examples $ []
-          :schema $ quote $ Fn (List app.schema/Message) (-> respo.schema/Component)
+          :schema $ quote $ Fn (List schema/Message) (-> respo.schema/Component)
         'effect-render-icon $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defeffect effect-render-icon (label) (action el at?)
             host/render-icon! el $ decode-map-as label 'String
@@ -408,7 +407,7 @@
               quasiquote $ app.schema/Archive :idx ~idx :title ~title :messages $ [] ~@messages
           :examples $ []
           :schema $ quote $ Macro (Expr String)
-            -> $ Expr app.schema/Archive
+            -> $ Expr Archive
             :capabilities :fs-read
         'read-content $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-content (messages idx d!)
@@ -420,7 +419,7 @@
                     .unwrap-or (:code? msg) false
                     , |Code $ :text msg
                 d! $ schema/Op :message $ struct-with msg
-                  :floor $ Option :some idx
+                  :floor $ Some idx
                 ; println |read text
                 match (dbg api-target)
                   |xunfei $ host/speak-xunfei! (santinize-voice text)
@@ -437,14 +436,14 @@
                 scroll-view!
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (List app.schema/Message) Number
-            Fn app.schema/Op $ -> Unit
+          :schema $ quote $ Fn (List schema/Message) Number
+            Fn schema/Op $ -> Unit
             -> Unit
         'reading-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def reading-list
             [] (load-archive |data/009-ghc-wasm.cirru) (load-archive |data/008-haskell-generics.cirru) (load-archive |data/007-immutable-channel.cirru) (load-archive |data/006-database-perf-usage.cirru) (load-archive |data/005-talk-cat.cirru) (load-archive |data/004-web-frontend.cirru) (load-archive |data/003-tutorial-learning.cirru) (load-archive |data/002-haskell-hiring.cirru) (load-archive |data/001-haskell-tiobe.cirru)
           :examples $ []
-          :schema $ quote $ List app.schema/Archive
+          :schema $ quote $ List schema/Archive
           :tests $ [] $ %{} 'TestEntry (:name |preserves-archived-conversations)
             :code $ quote $ do
               assert= 9 $ count reading-list
@@ -470,8 +469,8 @@
           :code $ quote $ defn swap-messages (messages d!)
             d! $ schema/Op :swap-messages messages
           :examples $ []
-          :schema $ quote $ Fn (List app.schema/Message)
-            Fn app.schema/Op $ -> Unit
+          :schema $ quote $ Fn (List schema/Message)
+            Fn schema/Op $ -> Unit
             -> Unit
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.comp.container
@@ -486,6 +485,7 @@
             app.schema :as schema
             js-ffi.browser :as browser
             app.browser :as host
+            app.schema :refer $ Archive
     'app.config $ %{} 'FileEntry
       :defs $ {}
         'api-target $ %{} 'CodeEntry (:doc |)
@@ -510,7 +510,7 @@
         '*reel $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defref *reel (typed/new-reel schema/store)
           :examples $ []
-          :schema $ quote $ Ref (reel.typed/State app.schema/Op app.schema/Store)
+          :schema $ quote $ Ref (typed/State schema/Op schema/Store)
         'dispatch! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn dispatch! (op)
             reset! *reel $ match op
@@ -520,7 +520,7 @@
                 typed/apply-control updater (deref *reel) control
             , &unit
           :examples $ []
-          :schema $ quote $ Fn app.schema/ResolvedOp (-> Unit)
+          :schema $ quote $ Fn schema/ResolvedOp (-> Unit)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             when config/dev? $ host/formatter!
@@ -639,13 +639,13 @@
           :code $ quote $ defn decode-message (raw)
             decode-map-as (storage-map raw) Message
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> app.schema/Message)
+          :schema $ quote $ Fn Dynamic (-> Message)
         'decode-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-messages (raw)
             if (list? raw) (map raw decode-message) (raise |Invalid-message-list)
           :examples $ []
           :schema $ quote $ Fn Dynamic
-            -> $ List app.schema/Message
+            -> $ List Message
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
@@ -656,7 +656,7 @@
                   Map Tag Dynamic
                 , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> app.schema/Store)
+          :schema $ quote $ Fn Dynamic (-> Store)
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
             match (get states :data)
@@ -665,7 +665,7 @@
                   decode-map-as (storage-map raw) FormState
               (:none) (FormState :content |)
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/FormState)
+          :schema $ quote $ Fn (Map Dynamic StateValue) (-> FormState) (:generics StateValue)
         'read-root-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-root-state (states)
             match (get states :data)
@@ -674,7 +674,7 @@
                   decode-map-as (storage-map raw) RootState
               (:none) (RootState :content | :voice? false)
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic Dynamic) (-> app.schema/RootState)
+          :schema $ quote $ Fn (Map Dynamic StateValue) (-> RootState) (:generics StateValue)
         'state-cursor $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn state-cursor (states)
             match (get states :cursor)
@@ -683,8 +683,9 @@
                   decode-map-as raw $ List respo.schema/CoordKey
               (:none) ([])
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic Dynamic)
+          :schema $ quote $ Fn (Map Dynamic StateValue)
             -> $ List respo.schema/CoordKey
+            :generics StateValue
         'storage-map $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn storage-map (raw)
             if (struct? raw) (&struct:to-map raw)
@@ -698,7 +699,7 @@
               {} $ :cursor $ []
               , :messages $ []
           :examples $ []
-          :schema $ quote app.schema/Store
+          :schema $ quote Store
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -717,7 +718,7 @@
                 assoc store :messages $ []
               (:swap-messages data) (assoc store :messages data)
           :examples $ []
-          :schema $ quote $ Fn app.schema/Store app.schema/Op String Number (-> app.schema/Store)
+          :schema $ quote $ Fn schema/Store schema/Op String Number (-> schema/Store)
           :tests $ [] $ %{} 'TestEntry (:name |preserves-message-operations)
             :code $ quote $ let
                 message $ schema/decode-message $ {} (:author |Me) (:text |Hello)
