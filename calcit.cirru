@@ -188,7 +188,7 @@
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
                         hint-fn $ Fn respo.schema/RespoEvent
-                          Fn app.schema/Op $ -> Unit
+                          Fn schema/Op $ -> Unit
                           -> Unit
                         d! $ app.schema/Op :edit-state cursor $ assoc state :voice?
                           not $ :voice? state
@@ -218,7 +218,7 @@
               span
                 {} $ :on-click $ fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn app.schema/Op $ -> Unit
+                    Fn schema/Op $ -> Unit
                     -> Unit
                   host/fullscreen!
                   , &unit
@@ -231,7 +231,7 @@
                   :cursor :pointer
                 fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn app.schema/Op $ -> Unit
+                    Fn schema/Op $ -> Unit
                     -> Unit
                   d! $ schema/Op :clear
                   host/clear-audio!
@@ -254,7 +254,7 @@
                   :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
                   :on-input $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn app.schema/Op $ -> Unit
+                      Fn schema/Op $ -> Unit
                       -> Unit
                     d! $ app.schema/Op :edit-state cursor $ assoc state :content
                       decode-map-as (:value e) 'String
@@ -262,7 +262,7 @@
                   :autofocus true
                   :on-keydown $ fn (e d!)
                     hint-fn $ Fn respo.schema/RespoEvent
-                      Fn app.schema/Op $ -> Unit
+                      Fn schema/Op $ -> Unit
                       -> Unit
                     let
                         event $ :event e
@@ -283,14 +283,14 @@
                 {} (:padding "|16px 0") (:line-height |36px)
               respo.core/keyed-> ({})
                 -> reading-list $ map $ fn (info)
-                  hint-fn $ Fn app.schema/Archive $ -> respo.schema/ChildPair
+                  hint-fn $ Fn Archive $ -> respo.schema/ChildPair
                   respo.core/keyed-element (:idx info)
                     div
                       {} (:class-name |hover-item)
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
                           hint-fn $ Fn respo.schema/RespoEvent
-                            Fn app.schema/Op $ -> Unit
+                            Fn schema/Op $ -> Unit
                             -> Unit
                           host/cancel-speech!
                           if voice?
@@ -362,7 +362,7 @@
               respo.core/keyed->
                 {} $ :id |message-area
                 map-indexed ms $ fn (idx message)
-                  hint-fn $ Fn Number app.schema/Message $ -> respo.schema/ChildPair
+                  hint-fn $ Fn Number schema/Message $ -> respo.schema/ChildPair
                   respo.core/keyed-component idx $ comp-message message
               if (empty? ms)
                 Some $ div
@@ -558,10 +558,10 @@
           :code $ quote $ defn render-app! ()
             render-with! (mount-target)
               fn () $ comp-container @*reel $ fn (control)
-                hint-fn $ Fn reel.typed/Control $ -> Unit
+                hint-fn $ Fn typed/Control $ -> Unit
                 dispatch! control
               fn (op)
-                hint-fn $ Fn app.schema/Op $ -> Unit
+                hint-fn $ Fn schema/Op $ -> Unit
                 when config/dev? $ println |Dispatch: op
                 dispatch! op
           :examples $ []
