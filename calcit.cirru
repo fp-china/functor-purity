@@ -188,7 +188,7 @@
                         :font-family ui/font-fancy
                       :on-click $ fn (e d!)
                         hint-fn $ Fn respo.schema/RespoEvent
-                          Fn app.schema/Op $ -> Unit
+                          Fn schema/Op $ -> Unit
                           -> Unit
                         d! $ app.schema/Op :edit-state cursor $ assoc state :voice?
                           not $ :voice? state
@@ -197,7 +197,9 @@
                   {} $ :style $ .merge ui/expand ui/column
                   memo-comp-by :comp-header comp-header
                   comp-messages $ :messages store
-                  memo-comp-by :comp-input comp-input $ >> states :input
+                  let
+                      input-branch $ >> states :input
+                    memo-comp-by :comp-input comp-input (schema/state-cursor input-branch) (schema/read-form-state input-branch)
                   if dev?
                     Some $ comp-typed-reel
                       decode-map-as (>> states :reel) (Map Dynamic Dynamic)
@@ -218,7 +220,7 @@
               span
                 {} $ :on-click $ fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn app.schema/Op $ -> Unit
+                    Fn schema/Op $ -> Unit
                     -> Unit
                   host/fullscreen!
                   , &unit
@@ -231,7 +233,7 @@
                   :cursor :pointer
                 fn (e d!)
                   hint-fn $ Fn respo.schema/RespoEvent
-                    Fn app.schema/Op $ -> Unit
+                    Fn schema/Op $ -> Unit
                     -> Unit
                   d! $ schema/Op :clear
                   host/clear-audio!
@@ -239,43 +241,40 @@
           :examples $ []
           :schema $ quote $ Fn (-> respo.schema/Component)
         'comp-input $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defcomp comp-input (states)
-            let
-                cursor $ schema/state-cursor states
-                state $ schema/read-form-state states
-              div
-                {} $ :style $ .merge ui/row-middle
-                  {} (:padding "|6px 10px")
-                    :background-color $ hsl 0 0 97
-                    :border-top $ str "|1px solid " $ hsl 0 0 90
-                textarea $ {}
-                  :value $ :content state
-                  :placeholder |Reply...
-                  :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
-                  :on-input $ fn (e d!)
-                    hint-fn $ Fn respo.schema/RespoEvent
-                      Fn app.schema/Op $ -> Unit
-                      -> Unit
-                    d! $ app.schema/Op :edit-state cursor $ assoc state :content
-                      decode-map-as (:value e) 'String
-                    , &unit
-                  :autofocus true
-                  :on-keydown $ fn (e d!)
-                    hint-fn $ Fn respo.schema/RespoEvent
-                      Fn app.schema/Op $ -> Unit
-                      -> Unit
-                    let
-                        event $ :event e
-                      when
-                        = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
-                        host/prevent-default! $ :event e
-                        d! $ schema/Op :message $ schema/Message :author |Me :floor None :code? None :text
-                          .unwrap $ browser/event-target-value $ browser/event-host (:event e)
-                        d! $ app.schema/Op :edit-state cursor $ assoc state :content |
-                        scroll-view!
-                    , &unit
+          :code $ quote $ defcomp comp-input (cursor state)
+            div
+              {} $ :style $ .merge ui/row-middle
+                {} (:padding "|6px 10px")
+                  :background-color $ hsl 0 0 97
+                  :border-top $ str "|1px solid " $ hsl 0 0 90
+              textarea $ {}
+                :value $ :content state
+                :placeholder |Reply...
+                :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
+                :on-input $ fn (e d!)
+                  hint-fn $ Fn respo.schema/RespoEvent
+                    Fn schema/Op $ -> Unit
+                    -> Unit
+                  d! $ app.schema/Op :edit-state cursor $ assoc state :content
+                    decode-map-as (:value e) 'String
+                  , &unit
+                :autofocus true
+                :on-keydown $ fn (e d!)
+                  hint-fn $ Fn respo.schema/RespoEvent
+                    Fn schema/Op $ -> Unit
+                    -> Unit
+                  let
+                      event $ :event e
+                    when
+                      = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
+                      host/prevent-default! $ :event e
+                      d! $ schema/Op :message $ schema/Message :author |Me :floor None :code? None :text
+                        .unwrap $ browser/event-target-value $ browser/event-host (:event e)
+                      d! $ app.schema/Op :edit-state cursor $ assoc state :content |
+                      scroll-view!
+                  , &unit
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic StateValue) (-> respo.schema/Component) (:generics StateValue)
+          :schema $ quote $ Fn (List respo.schema/CoordKey) schema/FormState (-> respo.schema/Component)
         'comp-menu $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-menu (voice?)
             div
@@ -283,14 +282,14 @@
                 {} (:padding "|16px 0") (:line-height |36px)
               respo.core/keyed-> ({})
                 -> reading-list $ map $ fn (info)
-                  hint-fn $ Fn app.schema/Archive $ -> respo.schema/ChildPair
+                  hint-fn $ Fn Archive $ -> respo.schema/ChildPair
                   respo.core/keyed-element (:idx info)
                     div
                       {} (:class-name |hover-item)
                         :style $ .merge ui/row-middle $ {} (:cursor :pointer) (:padding "|0 8px")
                         :on-click $ fn (e d!)
                           hint-fn $ Fn respo.schema/RespoEvent
-                            Fn app.schema/Op $ -> Unit
+                            Fn schema/Op $ -> Unit
                             -> Unit
                           host/cancel-speech!
                           if voice?
@@ -362,7 +361,7 @@
               respo.core/keyed->
                 {} $ :id |message-area
                 map-indexed ms $ fn (idx message)
-                  hint-fn $ Fn Number app.schema/Message $ -> respo.schema/ChildPair
+                  hint-fn $ Fn Number schema/Message $ -> respo.schema/ChildPair
                   respo.core/keyed-component idx $ comp-message message
               if (empty? ms)
                 Some $ div
@@ -558,10 +557,10 @@
           :code $ quote $ defn render-app! ()
             render-with! (mount-target)
               fn () $ comp-container @*reel $ fn (control)
-                hint-fn $ Fn reel.typed/Control $ -> Unit
+                hint-fn $ Fn typed/Control $ -> Unit
                 dispatch! control
               fn (op)
-                hint-fn $ Fn app.schema/Op $ -> Unit
+                hint-fn $ Fn schema/Op $ -> Unit
                 when config/dev? $ println |Dispatch: op
                 dispatch! op
           :examples $ []
@@ -629,9 +628,13 @@
           :code $ quote $ defstruct RootState (:content String) (:voice? Bool)
           :examples $ []
           :schema $ quote StructDef
+        'StateNode $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion StateNode EditorState String Bool (List respo.schema/CoordKey) (Map respo.schema/CoordKey app.schema/StateNode)
+          :examples $ []
+          :schema $ quote UnionDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ Map Tag Dynamic
+            :states $ Map Tag app.schema/StateNode
             :messages $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
@@ -646,14 +649,27 @@
           :examples $ []
           :schema $ quote $ Fn Dynamic
             -> $ List Message
+        'decode-state-tree $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn decode-state-tree (raw)
+            let
+                root $ -> (storage-map raw) (strip-legacy-nil :cursor) (strip-legacy-nil :data) (strip-legacy-nil :input)
+                normalized $ match (get root :input)
+                  (:some raw-input)
+                    let
+                        input $ decode-map-as raw-input $ Map respo.schema/CoordKey Dynamic
+                      .assoc root :input $ -> input (strip-legacy-nil :cursor) (strip-legacy-nil :data)
+                  (:none) root
+              decode-map-as normalized $ Map Tag StateNode
+          :examples $ []
+          :schema $ quote $ Fn Input
+            -> $ Map Tag StateNode
+            :generics Input
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
                 fields $ storage-map raw
               Store :states
-                decode-map-as
-                  .unwrap $ get fields :states
-                  Map Tag Dynamic
+                decode-state-tree $ .unwrap $ get fields :states
                 , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> Store)
@@ -700,6 +716,16 @@
               , :messages $ []
           :examples $ []
           :schema $ quote Store
+        'strip-legacy-nil $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn strip-legacy-nil (fields key)
+            match (get fields key)
+              (:some value)
+                if (nil? value) (.dissoc fields key) fields
+              (:none) fields
+          :examples $ []
+          :schema $ quote $ Fn (Map K V) K
+            -> $ Map K V
+            :generics K V
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -710,7 +736,7 @@
               (:edit-state cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
-                  Map Tag Dynamic
+                  Map Tag app.schema/StateNode
               (:hydrate-storage data) data
               (:message data)
                 assoc store :messages $ conj (:messages store) data
