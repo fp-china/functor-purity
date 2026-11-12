@@ -197,7 +197,9 @@
                   {} $ :style $ .merge ui/expand ui/column
                   memo-comp-by :comp-header comp-header
                   comp-messages $ :messages store
-                  memo-comp-by :comp-input comp-input $ >> states :input
+                  let
+                      input-branch $ >> states :input
+                    memo-comp-by :comp-input comp-input (schema/state-cursor input-branch) (schema/read-form-state input-branch)
                   if dev?
                     Some $ comp-typed-reel
                       decode-map-as (>> states :reel) (Map Dynamic Dynamic)
@@ -239,43 +241,40 @@
           :examples $ []
           :schema $ quote $ Fn (-> respo.schema/Component)
         'comp-input $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defcomp comp-input (states)
-            let
-                cursor $ schema/state-cursor states
-                state $ schema/read-form-state states
-              div
-                {} $ :style $ .merge ui/row-middle
-                  {} (:padding "|6px 10px")
-                    :background-color $ hsl 0 0 97
-                    :border-top $ str "|1px solid " $ hsl 0 0 90
-                textarea $ {}
-                  :value $ :content state
-                  :placeholder |Reply...
-                  :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
-                  :on-input $ fn (e d!)
-                    hint-fn $ Fn respo.schema/RespoEvent
-                      Fn schema/Op $ -> Unit
-                      -> Unit
-                    d! $ app.schema/Op :edit-state cursor $ assoc state :content
-                      decode-map-as (:value e) 'String
-                    , &unit
-                  :autofocus true
-                  :on-keydown $ fn (e d!)
-                    hint-fn $ Fn respo.schema/RespoEvent
-                      Fn schema/Op $ -> Unit
-                      -> Unit
-                    let
-                        event $ :event e
-                      when
-                        = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
-                        host/prevent-default! $ :event e
-                        d! $ schema/Op :message $ schema/Message :author |Me :floor None :code? None :text
-                          .unwrap $ browser/event-target-value $ browser/event-host (:event e)
-                        d! $ app.schema/Op :edit-state cursor $ assoc state :content |
-                        scroll-view!
-                    , &unit
+          :code $ quote $ defcomp comp-input (cursor state)
+            div
+              {} $ :style $ .merge ui/row-middle
+                {} (:padding "|6px 10px")
+                  :background-color $ hsl 0 0 97
+                  :border-top $ str "|1px solid " $ hsl 0 0 90
+              textarea $ {}
+                :value $ :content state
+                :placeholder |Reply...
+                :style $ .merge ui/textarea ui/expand $ {} (:height 40) (:line-height |24px) (:border :none)
+                :on-input $ fn (e d!)
+                  hint-fn $ Fn respo.schema/RespoEvent
+                    Fn schema/Op $ -> Unit
+                    -> Unit
+                  d! $ app.schema/Op :edit-state cursor $ assoc state :content
+                    decode-map-as (:value e) 'String
+                  , &unit
+                :autofocus true
+                :on-keydown $ fn (e d!)
+                  hint-fn $ Fn respo.schema/RespoEvent
+                    Fn schema/Op $ -> Unit
+                    -> Unit
+                  let
+                      event $ :event e
+                    when
+                      = |Enter $ browser/keyboard-event-key $ browser/keyboard-event-host event
+                      host/prevent-default! $ :event e
+                      d! $ schema/Op :message $ schema/Message :author |Me :floor None :code? None :text
+                        .unwrap $ browser/event-target-value $ browser/event-host (:event e)
+                      d! $ app.schema/Op :edit-state cursor $ assoc state :content |
+                      scroll-view!
+                  , &unit
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic StateValue) (-> respo.schema/Component) (:generics StateValue)
+          :schema $ quote $ Fn (List respo.schema/CoordKey) schema/FormState (-> respo.schema/Component)
         'comp-menu $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-menu (voice?)
             div
