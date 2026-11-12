@@ -209,6 +209,7 @@
           :schema $ quote $ Fn (reel.typed/State schema/Op schema/Store)
             Fn reel.typed/Control $ -> Unit
             -> respo.schema/Component
+            :features :io
         'comp-header $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-header ()
             div
@@ -320,7 +321,7 @@
                           :line-height |16px
               space-y 80
           :examples $ []
-          :schema $ quote $ Fn Bool (-> respo.schema/Component)
+          :schema $ quote $ Fn Bool (-> respo.schema/Component) (:features :io)
         'comp-message $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-message (content)
             div
@@ -438,6 +439,7 @@
           :schema $ quote $ Fn (List schema/Message) Number
             Fn schema/Op $ -> Unit
             -> Unit
+            :features :io
         'reading-list $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def reading-list
             [] (load-archive |data/009-ghc-wasm.cirru) (load-archive |data/008-haskell-generics.cirru) (load-archive |data/007-immutable-channel.cirru) (load-archive |data/006-database-perf-usage.cirru) (load-archive |data/005-talk-cat.cirru) (load-archive |data/004-web-frontend.cirru) (load-archive |data/003-tutorial-learning.cirru) (load-archive |data/002-haskell-hiring.cirru) (load-archive |data/001-haskell-tiobe.cirru)
@@ -519,7 +521,7 @@
                 typed/apply-control updater (deref *reel) control
             , &unit
           :examples $ []
-          :schema $ quote $ Fn schema/ResolvedOp (-> Unit)
+          :schema $ quote $ Fn schema/ResolvedOp (-> Unit) (:features :state)
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! ()
             when config/dev? $ host/formatter!
@@ -531,7 +533,7 @@
             println "|App started."
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io :state)
         'mount-target $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn mount-target ()
             narrow-element $ .unwrap $ browser/query-selector |.app
@@ -541,7 +543,7 @@
           :code $ quote $ defn persist-storage! ()
             browser/storage-set! |hestory $ format-cirru-edn $ :store @*reel
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :state)
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! ()
             match (host/build-error)
@@ -552,7 +554,7 @@
                   host/show-hud! |ok~ |Ok
               (:some error-text) (host/show-hud! |error error-text)
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io :state)
         'render-app! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-app! ()
             render-with! (mount-target)
@@ -564,7 +566,7 @@
                 when config/dev? $ println |Dispatch: op
                 dispatch! op
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io :state)
         'repeat! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn repeat! (duration cb)
             browser/set-timeout!
