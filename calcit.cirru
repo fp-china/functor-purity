@@ -628,9 +628,13 @@
           :code $ quote $ defstruct RootState (:content String) (:voice? Bool)
           :examples $ []
           :schema $ quote StructDef
+        'StateNode $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion StateNode EditorState String Bool (List respo.schema/CoordKey) (Map respo.schema/CoordKey app.schema/StateNode)
+          :examples $ []
+          :schema $ quote UnionDef
         'Store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct Store
-            :states $ Map Tag Dynamic
+            :states $ Map Tag app.schema/StateNode
             :messages $ List app.schema/Message
           :examples $ []
           :schema $ quote StructDef
@@ -645,14 +649,27 @@
           :examples $ []
           :schema $ quote $ Fn Dynamic
             -> $ List Message
+        'decode-state-tree $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn decode-state-tree (raw)
+            let
+                root $ -> (storage-map raw) (strip-legacy-nil :cursor) (strip-legacy-nil :data) (strip-legacy-nil :input)
+                normalized $ match (get root :input)
+                  (:some raw-input)
+                    let
+                        input $ decode-map-as raw-input $ Map respo.schema/CoordKey Dynamic
+                      .assoc root :input $ -> input (strip-legacy-nil :cursor) (strip-legacy-nil :data)
+                  (:none) root
+              decode-map-as normalized $ Map Tag StateNode
+          :examples $ []
+          :schema $ quote $ Fn Input
+            -> $ Map Tag StateNode
+            :generics Input
         'decode-store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-store (raw)
             let
                 fields $ storage-map raw
               Store :states
-                decode-map-as
-                  .unwrap $ get fields :states
-                  Map Tag Dynamic
+                decode-state-tree $ .unwrap $ get fields :states
                 , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> Store)
@@ -699,6 +716,16 @@
               , :messages $ []
           :examples $ []
           :schema $ quote Store
+        'strip-legacy-nil $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn strip-legacy-nil (fields key)
+            match (get fields key)
+              (:some value)
+                if (nil? value) (.dissoc fields key) fields
+              (:none) fields
+          :examples $ []
+          :schema $ quote $ Fn (Map K V) K
+            -> $ Map K V
+            :generics K V
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns app.schema
     'app.updater $ %{} 'FileEntry
@@ -709,7 +736,7 @@
               (:edit-state cursor state)
                 assoc store :states $ decode-map-as
                   update-state-tree (:states store) cursor state
-                  Map Tag Dynamic
+                  Map Tag app.schema/StateNode
               (:hydrate-storage data) data
               (:message data)
                 assoc store :messages $ conj (:messages store) data
