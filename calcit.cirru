@@ -198,7 +198,7 @@
                   memo-comp-by :comp-header comp-header
                   comp-messages $ :messages store
                   let
-                      input-branch $ >> states :input
+                      input-branch $ decode-map-as (>> states :input) (Map respo.schema/CoordKey schema/StateNode)
                     memo-comp-by :comp-input comp-input (schema/state-cursor input-branch) (schema/read-form-state input-branch)
                   if dev?
                     Some $ comp-typed-reel
@@ -644,13 +644,14 @@
           :code $ quote $ defn decode-message (raw)
             decode-map-as (storage-map raw) Message
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Message)
+          :schema $ quote $ Fn Input (-> Message) (:generics Input)
         'decode-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-messages (raw)
             if (list? raw) (map raw decode-message) (raise |Invalid-message-list)
           :examples $ []
-          :schema $ quote $ Fn Dynamic
+          :schema $ quote $ Fn Input
             -> $ List Message
+            :generics Input
         'decode-state-tree $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-state-tree (raw)
             let
@@ -674,7 +675,7 @@
                 decode-state-tree $ .unwrap $ get fields :states
                 , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Store)
+          :schema $ quote $ Fn Input (-> Store) (:generics Input)
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
             match (get states :data)
@@ -683,7 +684,7 @@
                   decode-map-as (storage-map raw) FormState
               (:none) (FormState :content |)
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic StateValue) (-> FormState) (:generics StateValue)
+          :schema $ quote $ Fn (Map respo.schema/CoordKey StateValue) (-> FormState) (:generics StateValue)
         'read-root-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-root-state (states)
             match (get states :data)
@@ -692,7 +693,7 @@
                   decode-map-as (storage-map raw) RootState
               (:none) (RootState :content | :voice? false)
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic StateValue) (-> RootState) (:generics StateValue)
+          :schema $ quote $ Fn (Map respo.schema/CoordKey StateValue) (-> RootState) (:generics StateValue)
         'state-cursor $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn state-cursor (states)
             match (get states :cursor)
@@ -701,7 +702,7 @@
                   decode-map-as raw $ List respo.schema/CoordKey
               (:none) ([])
           :examples $ []
-          :schema $ quote $ Fn (Map Dynamic StateValue)
+          :schema $ quote $ Fn (Map respo.schema/CoordKey StateValue)
             -> $ List respo.schema/CoordKey
             :generics StateValue
         'storage-map $ %{} 'CodeEntry (:doc |)
@@ -709,8 +710,9 @@
             if (struct? raw) (&struct:to-map raw)
               decode-map-as raw $ Map Tag Dynamic
           :examples $ []
-          :schema $ quote $ Fn Dynamic
+          :schema $ quote $ Fn Input
             -> $ Map Tag Dynamic
+            :generics Input
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states
