@@ -644,13 +644,14 @@
           :code $ quote $ defn decode-message (raw)
             decode-map-as (storage-map raw) Message
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Message)
+          :schema $ quote $ Fn Input (-> Message) (:generics Input)
         'decode-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-messages (raw)
             if (list? raw) (map raw decode-message) (raise |Invalid-message-list)
           :examples $ []
-          :schema $ quote $ Fn Dynamic
+          :schema $ quote $ Fn Input
             -> $ List Message
+            :generics Input
         'decode-state-tree $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn decode-state-tree (raw)
             let
@@ -674,7 +675,7 @@
                 decode-state-tree $ .unwrap $ get fields :states
                 , :messages $ decode-messages $ .unwrap (get fields :messages)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Store)
+          :schema $ quote $ Fn Input (-> Store) (:generics Input)
         'read-form-state $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn read-form-state (states)
             match (get states :data)
@@ -709,8 +710,9 @@
             if (struct? raw) (&struct:to-map raw)
               decode-map-as raw $ Map Tag Dynamic
           :examples $ []
-          :schema $ quote $ Fn Dynamic
+          :schema $ quote $ Fn Input
             -> $ Map Tag Dynamic
+            :generics Input
         'store $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def store
             Store :states
