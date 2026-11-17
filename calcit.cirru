@@ -209,7 +209,7 @@
           :schema $ quote $ Fn (reel.typed/State schema/Op schema/Store)
             Fn reel.typed/Control $ -> Unit
             -> respo.schema/Component
-            :features :io
+            :features :io :state
         'comp-header $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-header ()
             div
@@ -353,7 +353,7 @@
                       :line-height |24px
                     comp-md (:text content) ({})
           :examples $ []
-          :schema $ quote $ Fn schema/Message (-> respo.schema/Component)
+          :schema $ quote $ Fn schema/Message (-> respo.schema/Component) (:features :state)
         'comp-messages $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defcomp comp-messages (ms)
             div
@@ -374,7 +374,7 @@
                 , None
               space-y 80
           :examples $ []
-          :schema $ quote $ Fn (List schema/Message) (-> respo.schema/Component)
+          :schema $ quote $ Fn (List schema/Message) (-> respo.schema/Component) (:features :state)
         'effect-render-icon $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defeffect effect-render-icon (label) (action el at?)
             host/render-icon! el $ decode-map-as label 'String
