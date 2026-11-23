@@ -201,9 +201,7 @@
                       input-branch $ decode-map-as (>> states :input) (Map respo.schema/CoordKey schema/StateNode)
                     memo-comp-by :comp-input comp-input (schema/state-cursor input-branch) (schema/read-form-state input-branch)
                   if dev?
-                    Some $ comp-typed-reel
-                      decode-map-as (>> states :reel) (Map Dynamic Dynamic)
-                      , reel ({}) on-control
+                    Some $ comp-controlled-reel reel ({}) on-control
                     , None
           :examples $ []
           :schema $ quote $ Fn (reel.typed/State schema/Op schema/Store)
@@ -479,7 +477,7 @@
             respo-ui.core :refer $ hsl
             respo.core :refer $ defcomp defeffect <> >> a div button textarea span input create-element memo-comp-by
             respo.comp.space :refer $ space-x space-y
-            reel.comp.reel :refer $ comp-typed-reel
+            reel.comp.reel :refer $ comp-controlled-reel
             respo-md.comp.md :refer $ comp-md
             app.config :refer $ dev? api-target
             feather.core :refer $ comp-icon comp-i
