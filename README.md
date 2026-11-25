@@ -8,7 +8,7 @@ Demo https://r.fp-china.org/functor-purity/ .
 
 ### 使用者影响
 
-CLI 与 `@calcit/procs` 配对正式 **0.44.0**。升级后重新安装依赖并构建前端。正式模块为 Feather **0.6.9**、UI **0.15.7**、Respo **0.19.13**、JS FFI **0.2.19**、Reel **0.11.5**、Markdown **0.9.5**，传递 Router **0.12.11**。状态路径使用 `CoordKey`，表单和页面事件使用 `RootState | FormState`。Respo 派发具名 `Op`，Reel 控件和快捷键发送具名 `Control`，两者在更新入口通过 union 分流。消息列表用 Respo `ChildPair` 保留原数字键和顺序。
+CLI 与 `@calcit/procs` 配对正式 **0.45.1**。升级后重新安装依赖并构建前端。正式模块为 Feather **0.6.13**、UI **0.16.5**、Respo **0.19.18**、JS FFI **0.2.24**、Reel **0.11.9**、Markdown **0.9.9**，传递 Router **0.12.17**。状态路径使用 `CoordKey`，表单和页面事件使用 `RootState | FormState`。Respo 派发具名 `Op`，Reel 控件和快捷键发送具名 `Control`，两者在更新入口通过 union 分流。消息列表用 Respo `ChildPair` 保留原数字键和顺序。
 
 状态读取与表单渲染的 Map 值使用 `StateValue` 泛型，原数据入口继续解码为 `RootState` / `FormState`。归档宏显式导入 `Archive`，使官方格式器输出的短类型名保持可检查；对应工具链问题及消费者证据见 [Calcit #2686](https://github.com/calcit-lang/calcit/issues/2686#issuecomment-6786233272)。
 
